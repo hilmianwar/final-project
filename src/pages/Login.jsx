@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import login from "../../assets/image/login.jpg";
+import login from "../assets/image/login.jpg";
 import { Link } from "react-router-dom";
-import loginLogic from "../../business/LoginLogic";
+import useLogin from "../hooks/useLogin";
 
-const Login = ({ h }) => {
+const Login = () => {
   const { email, setEmail, password, setPassword, handleSubmit, err, setErr } =
-    loginLogic();
+    useLogin();
 
-  // console.log({ h });
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [err, setErr] = useState("");

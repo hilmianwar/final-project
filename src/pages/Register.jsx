@@ -1,7 +1,7 @@
 import React from "react";
-import login from "../../assets/image/login.jpg";
+import login from "../assets/image/login.jpg";
 import { Link } from "react-router-dom";
-import registerLogic from "../../business/RegisterLogic";
+import useRegister from "../hooks/useRegister";
 
 const Register = () => {
   const {
@@ -18,7 +18,7 @@ const Register = () => {
     err,
     setErr,
     handleSubmit,
-  } = registerLogic();
+  } = useRegister();
   // const [email, setEmail] = useState("");
   // const [name, setName] = useState("");
   // const [password, setPassword] = useState("");

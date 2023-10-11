@@ -1,8 +1,8 @@
 import React from "react";
 import { useRoutes } from "react-router";
-import Login from "./presentation/pages/Login";
-import Register from "./presentation/pages/Register";
-import Home from "./presentation/pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
 
 const routes = [
   { path: "/", element: <Home /> },

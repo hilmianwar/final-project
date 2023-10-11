@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Login from "../presentation/pages/Login";
-import { loginData } from "../data/loginData";
+import { useState } from "react";
+import { loginData } from "../utils/apis/data";
 
-export const loginLogic = () => {
+export const useLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
@@ -41,4 +39,4 @@ export const loginLogic = () => {
   //   );
 };
 
-export default loginLogic;
+export default useLogin;

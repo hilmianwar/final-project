@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/font/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-family: "Arthemis";
+  src: url("/assets/font/Arthemis-PKY27.ttf") format("truetype");
+}

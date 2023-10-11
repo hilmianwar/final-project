@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { registerData } from "../data/RegisterData";
+import { registerData } from "../utils/apis/data";
 
-const registerLogic = () => {
+const useRegister = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -40,4 +40,4 @@ const registerLogic = () => {
   };
 };
 
-export default registerLogic;
+export default useRegister;
