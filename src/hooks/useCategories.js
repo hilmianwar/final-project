@@ -18,5 +18,5 @@ export const useCategories = () => {
     getCategoriesData();
   }, []);
 
-  return { categories };
+  return { categories, setCategories };
 };

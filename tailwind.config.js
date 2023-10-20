@@ -4,7 +4,7 @@ export default {
   theme: {
     fontFamily: {
       monts: " Montserrat",
-      arth: "Arthemis",
+      art: "Arthemis",
     },
     extend: {},
   },

@@ -1,25 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Categories from "./Categories";
+import React, { useState, useEffect } from "react";
 import { useBanner } from "../hooks/useBanner";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
-import { useCategories } from "../hooks/useCategories";
 
-const Banner = () => {
-  const { banner } = useBanner();
-  const [current, setCurrent] = useState(0);
-
-  const nextSlide = () => {
-    current === banner.length - 1 ? setCurrent(0) : setCurrent(current + 1);
-  };
-
-  const prevSlide = () => {
-    current === 0 ? setCurrent(banner.length - 1) : setCurrent(current - 1);
-  };
-
-  // useEffect(() => {
-  //   const interval = setInterval(nextSlide, 5000); // Ganti gambar setiap 5 detik
-  //   return () => clearInterval(interval);
-  // }, []);
+const BannerComp = () => {
+  const { banner, current, nextSlide, prevSlide } = useBanner();
 
   return (
     <div className="relative w-full h-screen">
@@ -33,7 +17,7 @@ const Banner = () => {
       />
       <div className="w-full h-screen flex justify-center items-center text-center lg:text-start lg:justify-start text-white">
         <div className="absolute font-monts z-10 -mt-24 lg:-mt-16 lg:ml-32 w-1/2 md:w-1/3">
-          <h3 className="text-lg lg:text-2xl">Welcome to Halo</h3>
+          <h3 className="text-lg lg:text-2xl">Welcome to Voyager</h3>
           <h1 className="text-4xl lg:text-[66px] leading-[1]">
             Explore
             <br /> The World
@@ -43,20 +27,22 @@ const Banner = () => {
             excitement of exploring new places.
           </p>
         </div>
-        <Categories />
         {banner.map((item, index) => (
-          <img
+          <div
             key={index}
-            src={item.imageUrl}
-            alt=""
             className={`w-full h-full object-cover brightness-50  ${
               index === current ? "block" : "hidden"
             }`}
-          />
+            style={{
+              background: `url(${item.imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
         ))}
       </div>
     </div>
   );
 };
 
-export default Banner;
+export default BannerComp;

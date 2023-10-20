@@ -4,7 +4,35 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("/assets/font/Montserrat-VariableFont_wght.ttf") format("truetype");
+  src: url("assets/font/Montserrat-VariableFont_wght.ttf") format("truetype");
   font-family: "Arthemis";
-  src: url("/assets/font/Arthemis-PKY27.ttf") format("truetype");
+  src: url("assets/font/Arthemis-PKY27.ttf") format("truetype");
+}
+
+.react-multiple-carousel__arrow--left::before {
+  background-color: rgb(16, 185, 129);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: black;
+  margin-left: -20px;
+}
+.react-multiple-carousel__arrow--right::before {
+  background-color: rgb(16, 185, 129);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: black;
+}
+
+.react-multiple-carousel__arrow--right {
+  margin-right: -32px;
+}
+
+.react-multiple-carousel__arrow--left:hover {
+  background-color: transparent;
+}
+
+.react-multiple-carousel__arrow--right:hover {
+  background-color: transparent;
 }

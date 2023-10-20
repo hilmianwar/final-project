@@ -25,18 +25,6 @@ export const useLogin = () => {
     err,
     setErr,
   };
-
-  //   return (
-  //     <Login
-  //       email={email}
-  //       setEmail={setEmail}
-  //       password={password}
-  //       setPassword={setPassword}
-  //       handleSubmit={handleSubmit}
-  //       err={err}
-  //       setErr={setErr}
-  //     />
-  //   );
 };
 
 export default useLogin;

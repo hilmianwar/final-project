@@ -1,12 +1,12 @@
 import React from "react";
 import { useCategories } from "../hooks/useCategories";
 
-const Categories = () => {
+const CategoriesComp = () => {
   const { categories } = useCategories();
   return (
     <div>
-      <div className="flex justify-center items-center w-full h-40  lg:h-32 absolute bottom-0 z-10 lg:pr-32">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 -mt-32 gap-6 h-full w-full md:px-20 lg:pl-32 lg:px-0">
+      <div className="flex justify-center items-center text-white w-full relative  lg:h-32  bottom-0 z-10 lg:pr-32">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 -mt-64 lg:-mt-96 gap-6 h-full w-full md:px-20 lg:pl-32 lg:px-0">
           {/* <div className="grid md:grid-cols-3 lg:grid-cols-6 -mt-24 gap-6 h-full w-full md:px-20 lg:pl-32 lg:px-0"> */}
           {categories.slice(2, 6).map((item, index) => (
             <div
@@ -23,7 +23,7 @@ const Categories = () => {
                   : {}),
               }}
             >
-              <h2 className="text-xl pl-3 pb-2 font-monts">
+              <h2 className="text-4xl pl-3 pb-2 font-art">
                 {index === categories.slice(2, 6).length - 1 ? null : item.name}
               </h2>
               {index === categories.slice(2, 6).length - 1 && (
@@ -41,4 +41,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default CategoriesComp;

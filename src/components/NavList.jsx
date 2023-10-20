@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
+import { BiMenu } from "react-icons/bi";
 
 const NavList = ({ scroll }) => {
   const [click, setClick] = useState(false);
@@ -33,16 +34,19 @@ const NavList = ({ scroll }) => {
 
   return (
     <div>
-      <div className="lg:flex items-center justify-end hidden">
+      <div className="font-monts lg:flex items-center justify-end hidden">
         <ul className="flex gap-6 text-white">
-          <Link>
+          <Link to="/">
             <li>Home</li>
           </Link>
-          <Link>
-            <li>About</li>
+          <Link to="/categories">
+            <li>Categories</li>
           </Link>
-          <Link>
+          <Link to="/destination">
             <li>Destination</li>
+          </Link>
+          <Link to="/dashboard">
+            <li>Dashboard</li>
           </Link>
           <Link>
             <button>
@@ -57,7 +61,7 @@ const NavList = ({ scroll }) => {
         className="block lg:hidden transition z-50 text-white"
         onClick={() => setClick(!click)}
       >
-        {click ? <FaTimes /> : <CiMenuFries />}
+        {click ? <FaTimes /> : <BiMenu className="text-3xl -mt-1" />}
       </button>
     </div>
   );
