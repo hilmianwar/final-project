@@ -10,28 +10,39 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiDetail } from "react-icons/bi";
 import useDeleteCategories from "../hooks/useDeleteCategories";
-import useUpdateCategories from "../hooks/useUpdateCategories";
+import DeleteModal from "../components/MessageModal";
+import AddDestination from "../components/AddDestination";
+import { useAddDestination } from "../hooks/useAddDestination";
+import useDeleteDestination from "../hooks/useDeleteDestination";
+import useUpdateDestination from "../hooks/useUpdateDestination";
+import UpdateDestination from "../components/UpdateDestination";
+import { useBanner } from "../hooks/useBanner";
 import MessageModal from "../components/MessageModal";
+import { useAddBanner } from "../hooks/useAddBanner";
+import AddBanner from "../components/AddBanner";
+import useDeleteBanner from "../hooks/useDeleteBanner";
+import useUpdateBanner from "../hooks/useUpdateBanner";
+import UpdateBanner from "../components/UpdateBanner";
 
-const DashCategories = () => {
-  const { categories, setCategories } = useCategories();
-  const { showAddCategories, setShowAddCategories } = useAddCategories();
+const DashBanner = () => {
+  const { banner, setBanner } = useBanner();
+  const { showAddBanner, setShowAddBanner } = useAddBanner();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
-    handleDeleteCategories,
+    handleDeleteBanner,
     errDelete,
     successDelete,
-    showModalDelete,
-    setShowModalDelete,
-  } = useDeleteCategories();
+    showMassageModal,
+    setShowMassageModal,
+  } = useDeleteBanner();
   const {
-    showUpdateCategories,
-    setShowUpdateCategories,
-    categoriesData,
-    setCategoriesData,
-    setEditCategoriesId,
-    editCategoriesId,
-  } = useUpdateCategories();
+    showUpdateBanner,
+    setShowUpdateBanner,
+    bannerData,
+    setBannerData,
+    editBannerId,
+    setEditBannerId,
+  } = useUpdateBanner();
 
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
@@ -41,7 +52,7 @@ const DashCategories = () => {
   };
 
   // Menghitung indeks pengguna yang akan ditampilkan di halaman saat ini
-  const currentItem = categories.slice(
+  const currentItem = banner.slice(
     (currentPage - 1) * dataPerPage,
     currentPage * dataPerPage
   );
@@ -51,27 +62,29 @@ const DashCategories = () => {
   if (isSmallView) {
     return (
       <div className=" shadow-md rounded my-6 mx-1">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {/* memunculkan form add banner  */}
+        {showAddBanner && (
+          <AddBanner
+            show={showAddBanner}
+            onHide={() => setShowAddBanner(false)}
           />
         )}
-        {showUpdateCategories && (
-          <UpdateCategories
-            show={showUpdateCategories}
-            onHide={() => setShowUpdateCategories(false)}
-            categories={categoriesData}
-            id={editCategoriesId}
+        {/* memunculkan form Update banner */}
+        {showUpdateBanner && (
+          <UpdateBanner
+            show={showUpdateBanner}
+            onHide={() => setShowUpdateBanner(false)}
+            banner={bannerData}
+            id={editBannerId}
           />
         )}
 
         <div className="px-4 mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddBanner(true)}
           >
-            Add Categoris
+            Add Banner
           </button>
         </div>
         {currentItem.map((item) => (
@@ -91,18 +104,16 @@ const DashCategories = () => {
               <span className="font-semibold">Action:</span>
               <span className="flex justify-center items-center px-4 gap-3 text-lg">
                 <button
-                  onClick={() =>
-                    handleDeleteCategories(item.id, categories, setCategories)
-                  }
+                  onClick={() => handleDeleteBanner(item.id, banner, setBanner)}
                   title="Delete"
                 >
                   <RiDeleteBin5Line />
                 </button>
                 <button
                   onClick={() => {
-                    setShowUpdateCategories(true);
-                    setEditCategoriesId(item.id);
-                    setCategoriesData(item);
+                    setShowUpdateBanner(true);
+                    setEditBannerId(item.id);
+                    setBannerData(item);
                   }}
                   title="Update"
                 >
@@ -118,11 +129,12 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={banner.length}
           itemsPerPage={dataPerPage}
         />
+        {/* memunculkan pesan error ataupun succes delete*/}
         <MessageModal
-          show={showModalDelete}
+          show={showMassageModal}
           err={errDelete}
           succes={successDelete}
         />
@@ -131,26 +143,26 @@ const DashCategories = () => {
   } else {
     return (
       <div className="shadow-md rounded my-6 mx-1 lg:mx-10">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {showAddBanner && (
+          <AddBanner
+            show={showAddBanner}
+            onHide={() => setShowAddBanner(false)}
           />
         )}
-        {showUpdateCategories && (
-          <UpdateCategories
-            show={showUpdateCategories}
-            onHide={() => setShowUpdateCategories(false)}
-            categories={categoriesData}
-            id={editCategoriesId}
+        {showUpdateBanner && (
+          <UpdateBanner
+            show={showUpdateBanner}
+            onHide={() => setShowUpdateBanner(false)}
+            banner={bannerData}
+            id={editBannerId}
           />
         )}
         <div className="flex justify-end mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddBanner(true)}
           >
-            Add Categoris
+            Add Banner
           </button>
         </div>
         <table className="w-full">
@@ -175,7 +187,7 @@ const DashCategories = () => {
                 <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
                   <button
                     onClick={() =>
-                      handleDeleteCategories(item.id, categories, setCategories)
+                      handleDeleteBanner(item.id, banner, setBanner)
                     }
                     title="Delete"
                   >
@@ -183,9 +195,9 @@ const DashCategories = () => {
                   </button>
                   <button
                     onClick={() => {
-                      setShowUpdateCategories(true);
-                      setEditCategoriesId(item.id);
-                      setCategoriesData(item);
+                      setShowUpdateBanner(true);
+                      setEditBannerId(item.id);
+                      setBannerData(item);
                     }}
                     title="Update"
                   >
@@ -202,12 +214,12 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={banner.length}
           itemsPerPage={dataPerPage}
         />
+        {/* memunculkan pesan error ataupun succes delete*/}
         <MessageModal
-          show={showModalDelete}
-          onHide={() => setShowModalDelete(false)}
+          show={showMassageModal}
           err={errDelete}
           succes={successDelete}
         />
@@ -216,4 +228,4 @@ const DashCategories = () => {
   }
 };
 
-export default DashCategories;
+export default DashBanner;

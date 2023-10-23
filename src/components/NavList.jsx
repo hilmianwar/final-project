@@ -34,7 +34,7 @@ const NavList = ({ scroll }) => {
 
   return (
     <div>
-      <div className="font-monts lg:flex items-center justify-end hidden">
+      <div className="font-mont lg:flex items-center justify-end hidden">
         <ul className="flex gap-6 text-white">
           <Link to="/">
             <li>Home</li>

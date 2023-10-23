@@ -68,6 +68,37 @@ export const bannerData = () => {
   );
 };
 
+export const addBannerData = (name, imageUrl) => {
+  const payload = {
+    name: name,
+    imageUrl: imageUrl,
+  };
+  return axios.post(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-banner",
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
+export const deleteBannerData = (id) => {
+  return axios.delete(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-banner/${id}`,
+    { headers: headersAuthor }
+  );
+};
+
+export const updateBannerData = (id, name, imageUrl) => {
+  const payload = {
+    name: name,
+    imageUrl: imageUrl,
+  };
+  return axios.post(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-banner/${id}`,
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
 export const categoriesData = () => {
   return axios.get(
     "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/categories",
@@ -75,10 +106,92 @@ export const categoriesData = () => {
   );
 };
 
-export const activitiesData = () => {
+export const destinationData = () => {
   return axios.get(
     "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/activities",
     { headers: headers }
+  );
+};
+
+export const addDestinationData = (
+  categoryId,
+  name,
+  description,
+  imageUrls,
+  price,
+  priceDiscount,
+  rating,
+  totalReviews,
+  facilities,
+  address,
+  province,
+  city,
+  locationMaps
+) => {
+  const payload = {
+    categoryId: categoryId,
+    title: name,
+    description: description,
+    imageUrls: imageUrls,
+    price: parseFloat(price),
+    price_discount: parseFloat(priceDiscount),
+    rating: parseFloat(rating),
+    total_reviews: parseFloat(totalReviews),
+    facilities: facilities,
+    address: address,
+    province: province,
+    city: city,
+    location_maps: locationMaps,
+  };
+  return axios.post(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-activity",
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
+export const deleteDestinationData = (id) => {
+  return axios.delete(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-activity/${id}`,
+    { headers: headersAuthor }
+  );
+};
+
+export const UpdateDestinationData = (
+  id,
+  categoryId,
+  name,
+  description,
+  imageUrls,
+  price,
+  priceDiscount,
+  rating,
+  totalReviews,
+  facilities,
+  address,
+  province,
+  city,
+  locationMaps
+) => {
+  const payload = {
+    categoryId: categoryId,
+    title: name,
+    description: description,
+    imageUrls: imageUrls,
+    price: parseFloat(price),
+    price_discount: parseFloat(priceDiscount),
+    rating: parseFloat(rating),
+    total_reviews: parseFloat(totalReviews),
+    facilities: facilities,
+    address: address,
+    province: province,
+    city: city,
+    location_maps: locationMaps,
+  };
+  return axios.post(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-activity/${id}`,
+    payload,
+    { headers: headersAuthor }
   );
 };
 
@@ -108,6 +221,18 @@ export const addCategoriesData = (name, imageUrl) => {
   );
 };
 
+export const updateCategoriesData = (id, name, imageUrl) => {
+  const payload = {
+    name: name,
+    imageUrl: imageUrl,
+  };
+  return axios.post(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-category/${id}`,
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
 export const deleteCategoriesData = (id) => {
   return axios.delete(
     `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-category/${id}`,
@@ -115,14 +240,60 @@ export const deleteCategoriesData = (id) => {
   );
 };
 
-export const addPromoData = (name, imageUrl) => {
+export const addPromoData = (
+  name,
+  description,
+  imageUrl,
+  condition,
+  promCode,
+  promDiscPrice,
+  minClaimPrice
+) => {
   const payload = {
-    name: name,
+    title: name,
+    description: description,
     imageUrl: imageUrl,
+    terms_condition: condition,
+    promo_code: promCode,
+    promo_discount_price: parseFloat(promDiscPrice),
+    minimum_claim_price: parseFloat(minClaimPrice),
   };
   return axios.post(
     "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-promo",
     payload,
+    { headers: headersAuthor }
+  );
+};
+
+export const updatePromoData = (
+  id,
+  name,
+  description,
+  imageUrl,
+  condition,
+  promCode,
+  promDiscPrice,
+  minClaimPrice
+) => {
+  const payload = {
+    title: name,
+    description: description,
+    imageUrl: imageUrl,
+    terms_condition: condition,
+    promo_code: promCode,
+    promo_discount_price: parseFloat(promDiscPrice),
+    minimum_claim_price: parseFloat(minClaimPrice),
+  };
+  return axios.post(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-promo/${id}`,
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
+export const deletePromoData = (id) => {
+  return axios.delete(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-promo/${id}`,
     { headers: headersAuthor }
   );
 };

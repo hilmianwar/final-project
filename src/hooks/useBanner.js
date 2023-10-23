@@ -8,11 +8,6 @@ export const useBanner = () => {
   const getBannerData = () => {
     bannerData()
       .then((res) => {
-        // const resData = res.data.data;
-        // const selectedData = resData
-        //   .slice(4, 5)
-        //   .concat(resData.slice(8, 10));
-        // setBanner(selectedData);
         setBanner(res.data.data);
       })
       .catch((err) => {
@@ -37,5 +32,5 @@ export const useBanner = () => {
     getBannerData();
   }, []);
 
-  return { banner, current, nextSlide, prevSlide };
+  return { banner, setBanner, current, nextSlide, prevSlide };
 };

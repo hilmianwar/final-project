@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { addCategoriesData } from "../utils/apis/data";
+import { addCategoriesData, categoriesData } from "../utils/apis/data";
+import { useCategories } from "./useCategories";
 
 export const useAddCategories = () => {
   const [name, setName] = useState("");
@@ -29,5 +30,6 @@ export const useAddCategories = () => {
     err,
     setErr,
     successMessage,
+    setSuccessMessage,
   };
 };

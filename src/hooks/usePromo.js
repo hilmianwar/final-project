@@ -37,7 +37,7 @@ const usePromo = () => {
     getPromoData();
   }, []);
 
-  return { promo, responsive };
+  return { promo, setPromo, responsive };
 };
 
 export default usePromo;

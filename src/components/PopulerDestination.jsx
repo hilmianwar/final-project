@@ -1,10 +1,10 @@
 import React from "react";
-import { useActivities } from "../hooks/useActivities";
+import { useDestination } from "../hooks/useDestination";
 import { MdLocationOn } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
 const PopulerDestination = () => {
-  const { activities } = useActivities();
+  const { destination } = useDestination();
   const navigate = useNavigate();
 
   const handleDetail = (id) => {
@@ -18,7 +18,7 @@ const PopulerDestination = () => {
         <h1 className="text-5xl">Populer Destination</h1>
       </div>
       <div className="flex justify-center items-center flex-col lg:flex-row gap-6 box-border mb-6 lg:mb-6">
-        {activities.slice(0, 1).map((item) => (
+        {destination.slice(0, 1).map((item) => (
           <button
             onClick={() => handleDetail(item.id)}
             className="w-11/12 md:w-1/2 lg:w-[69%] h-52 rounded-md transition hover:scale-x-[1.02] hover:scale-y-105"
@@ -38,7 +38,7 @@ const PopulerDestination = () => {
           </button>
         ))}
 
-        {activities.slice(1, 2).map((item) => (
+        {destination.slice(1, 2).map((item) => (
           <div
             className="w-11/12 md:w-1/2 lg:w-2/6 h-52 rounded-md transition hover:scale-105"
             style={{
@@ -58,7 +58,7 @@ const PopulerDestination = () => {
         ))}
       </div>
       <div className="flex justify-center items-center flex-col lg:flex-row  gap-6">
-        {activities.slice(2, 5).map((item) => (
+        {destination.slice(2, 5).map((item) => (
           <div
             className="w-11/12 md:w-1/2 lg:w-2/6 h-52 rounded-md transition hover:scale-105"
             style={{

@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeleteModal = ({ show, onHide, err, succes }) => {
+const MessageModal = ({ show, err, succes }) => {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-start justify-end mt-2 ${
@@ -21,4 +21,4 @@ const DeleteModal = ({ show, onHide, err, succes }) => {
   );
 };
 
-export default DeleteModal;
+export default MessageModal;

@@ -10,28 +10,35 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiDetail } from "react-icons/bi";
 import useDeleteCategories from "../hooks/useDeleteCategories";
+import DeleteModal from "../components/MessageModal";
 import useUpdateCategories from "../hooks/useUpdateCategories";
+import { useDestination } from "../hooks/useDestination";
+import AddDestination from "../components/AddDestination";
+import { useAddDestination } from "../hooks/useAddDestination";
+import useDeleteDestination from "../hooks/useDeleteDestination";
+import useUpdateDestination from "../hooks/useUpdateDestination";
+import UpdateDestination from "../components/UpdateDestination";
 import MessageModal from "../components/MessageModal";
 
-const DashCategories = () => {
-  const { categories, setCategories } = useCategories();
-  const { showAddCategories, setShowAddCategories } = useAddCategories();
+const DashDestination = () => {
+  const { destination, setDestination } = useDestination();
+  const { showAddDestination, setShowAddDestination } = useAddDestination();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
-    handleDeleteCategories,
+    handleDeleteDestination,
     errDelete,
     successDelete,
     showModalDelete,
     setShowModalDelete,
-  } = useDeleteCategories();
+  } = useDeleteDestination();
   const {
-    showUpdateCategories,
-    setShowUpdateCategories,
-    categoriesData,
-    setCategoriesData,
-    setEditCategoriesId,
-    editCategoriesId,
-  } = useUpdateCategories();
+    showUpdateDestination,
+    setShowUpdateDestination,
+    destinationData,
+    setDestinationData,
+    editDestinationId,
+    setEditDestinationId,
+  } = useUpdateDestination();
 
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
@@ -41,7 +48,7 @@ const DashCategories = () => {
   };
 
   // Menghitung indeks pengguna yang akan ditampilkan di halaman saat ini
-  const currentItem = categories.slice(
+  const currentItem = destination.slice(
     (currentPage - 1) * dataPerPage,
     currentPage * dataPerPage
   );
@@ -51,33 +58,34 @@ const DashCategories = () => {
   if (isSmallView) {
     return (
       <div className=" shadow-md rounded my-6 mx-1">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {/* memunculkan form add destination  */}
+        {showAddDestination && (
+          <AddDestination
+            show={showAddDestination}
+            onHide={() => setShowAddDestination(false)}
           />
         )}
-        {showUpdateCategories && (
-          <UpdateCategories
-            show={showUpdateCategories}
-            onHide={() => setShowUpdateCategories(false)}
-            categories={categoriesData}
-            id={editCategoriesId}
+        {showUpdateDestination && (
+          <UpdateDestination
+            show={showUpdateDestination}
+            onHide={() => setShowUpdateDestination(false)}
+            destination={destinationData}
+            id={editDestinationId}
           />
         )}
 
         <div className="px-4 mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddDestination(true)}
           >
-            Add Categoris
+            Add Destination
           </button>
         </div>
         {currentItem.map((item) => (
           <div key={item.id} className="p-4">
             <p>
-              <span className="font-semibold">Name:</span> {item.name}
+              <span className="font-semibold">Name:</span> {item.title}
             </p>
             <p>
               <span className="font-semibold">Created At:</span>{" "}
@@ -92,7 +100,11 @@ const DashCategories = () => {
               <span className="flex justify-center items-center px-4 gap-3 text-lg">
                 <button
                   onClick={() =>
-                    handleDeleteCategories(item.id, categories, setCategories)
+                    handleDeleteDestination(
+                      item.id,
+                      destination,
+                      setDestination
+                    )
                   }
                   title="Delete"
                 >
@@ -100,9 +112,9 @@ const DashCategories = () => {
                 </button>
                 <button
                   onClick={() => {
-                    setShowUpdateCategories(true);
-                    setEditCategoriesId(item.id);
-                    setCategoriesData(item);
+                    setShowUpdateDestination(true);
+                    setEditDestinationId(item.id);
+                    setDestinationData(item);
                   }}
                   title="Update"
                 >
@@ -118,11 +130,13 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={destination.length}
           itemsPerPage={dataPerPage}
         />
+        {/* memunculkan pesan error ataupun succes delete*/}
         <MessageModal
           show={showModalDelete}
+          onHide={() => setShowModalDelete(false)}
           err={errDelete}
           succes={successDelete}
         />
@@ -131,26 +145,26 @@ const DashCategories = () => {
   } else {
     return (
       <div className="shadow-md rounded my-6 mx-1 lg:mx-10">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {showAddDestination && (
+          <AddDestination
+            show={showAddDestination}
+            onHide={() => setShowAddDestination(false)}
           />
         )}
-        {showUpdateCategories && (
-          <UpdateCategories
-            show={showUpdateCategories}
-            onHide={() => setShowUpdateCategories(false)}
-            categories={categoriesData}
-            id={editCategoriesId}
+        {showUpdateDestination && (
+          <UpdateDestination
+            show={showUpdateDestination}
+            onHide={() => setShowUpdateDestination(false)}
+            destination={destinationData}
+            id={editDestinationId}
           />
         )}
         <div className="flex justify-end mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddDestination(true)}
           >
-            Add Categoris
+            Add Destination
           </button>
         </div>
         <table className="w-full">
@@ -165,7 +179,7 @@ const DashCategories = () => {
           <tbody>
             {currentItem.map((item) => (
               <tr key={item.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item.name}</td>
+                <td className="px-4 h-12 w-1/4">{item.title}</td>
                 <td className="px-4 h-12 w-1/3">
                   {format(new Date(item.createdAt), "dd MMMM yyyy")}
                 </td>
@@ -175,7 +189,11 @@ const DashCategories = () => {
                 <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
                   <button
                     onClick={() =>
-                      handleDeleteCategories(item.id, categories, setCategories)
+                      handleDeleteDestination(
+                        item.id,
+                        destination,
+                        setDestination
+                      )
                     }
                     title="Delete"
                   >
@@ -183,9 +201,9 @@ const DashCategories = () => {
                   </button>
                   <button
                     onClick={() => {
-                      setShowUpdateCategories(true);
-                      setEditCategoriesId(item.id);
-                      setCategoriesData(item);
+                      setShowUpdateDestination(true);
+                      setEditDestinationId(item.id);
+                      setDestinationData(item);
                     }}
                     title="Update"
                   >
@@ -202,9 +220,10 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={destination.length}
           itemsPerPage={dataPerPage}
         />
+        {/* memunculkan pesan error ataupun succes delete*/}
         <MessageModal
           show={showModalDelete}
           onHide={() => setShowModalDelete(false)}
@@ -216,4 +235,4 @@ const DashCategories = () => {
   }
 };
 
-export default DashCategories;
+export default DashDestination;

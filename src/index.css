@@ -3,12 +3,15 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("assets/font/Montserrat-VariableFont_wght.ttf") format("truetype");
   font-family: "Arthemis";
   src: url("assets/font/Arthemis-PKY27.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Montserrat";
+  src: url("assets/font/Montserrat-VariableFont_wght.ttf") format("truetype");
+  
+}
 .react-multiple-carousel__arrow--left::before {
   background-color: rgb(16, 185, 129);
   width: 30px;

@@ -1,21 +1,42 @@
+import { useEffect } from "react";
 import React from "react";
-import { useAddPromo } from "../hooks/useAddPromo";
+import useUpdatePromo from "../hooks/useUpdatePromo";
 
-const AddPromo = ({ show, onHide }) => {
+const UpdatePromo = ({ show, onHide, promo, id }) => {
   const {
+    name,
     setName,
+    description,
     setDescription,
+    imageUrl,
     setImageUrl,
+    condition,
     setCondition,
+    promCode,
     setPromCode,
+    promDiscPrice,
     setPromDiscPrice,
+    minClaimPrice,
     setMinClaimPrice,
-    handleAddPromo,
-    err,
-    setErr,
-    successMessage,
-    setSuccessMessage,
-  } = useAddPromo();
+    handleUpdatePromo,
+    errUpdate,
+    setErrUpdate,
+    successUpdate,
+    setSuccessUpdate,
+  } = useUpdatePromo();
+
+  useEffect(() => {
+    if (promo) {
+      setName(promo.title);
+      setDescription(promo.description);
+      setImageUrl(promo.imageUrl);
+      setCondition(promo.terms_condition);
+      setPromCode(promo.promo_code);
+      setPromDiscPrice(promo.promo_discount_price);
+      setMinClaimPrice(promo.minimum_claim_price);
+    }
+  }, [promo]);
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${
@@ -27,24 +48,24 @@ const AddPromo = ({ show, onHide }) => {
           show ? "block" : "hidden"
         }`}
       ></div>
-      <div className="bg-neutral-900 text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto h-[660px]">
+      <div className="bg-neutral-900 text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto h-[510px]">
         <div className="py-4 text-left px-6">
-          <div className="text-xl -mt-3 text-center mb-4">
-            <h3 className="font-semibold">Add Promo</h3>
+          <div className="text-xl mt-10 text-center mb-8">
+            <h3 className="font-semibold">Update Promo</h3>
           </div>
           <form>
-            {!!err.length && (
+            {!!errUpdate.length && (
               <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{err}</p>
-                <button onClick={() => setErr("")} className=" pr-1">
+                <p>{errUpdate}</p>
+                <button onClick={() => setErrUpdate("")} className=" pr-1">
                   X
                 </button>
               </div>
             )}
-            {!!successMessage.length && (
+            {!!successUpdate.length && (
               <div className=" bg-green-500 p-2 rounded-md flex justify-between">
-                <p>{successMessage}</p>
-                <button onClick={() => setSuccessMessage("")} className=" pr-1">
+                <p>{successUpdate}</p>
+                <button onClick={() => setSuccessUpdate("")} className=" pr-1">
                   X
                 </button>
               </div>
@@ -55,6 +76,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="text"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter name"
@@ -66,6 +88,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="text"
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter description"
@@ -77,6 +100,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="text"
+                value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter image URL"
@@ -88,6 +112,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="text"
+                value={condition}
                 onChange={(e) => setCondition(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter terms condition"
@@ -99,6 +124,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="text"
+                value={promCode}
                 onChange={(e) => setPromCode(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter promo code"
@@ -110,6 +136,7 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="number"
+                value={promDiscPrice}
                 onChange={(e) => setPromDiscPrice(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter promo disc price"
@@ -121,15 +148,16 @@ const AddPromo = ({ show, onHide }) => {
               </label>
               <input
                 type="number"
+                value={minClaimPrice}
                 onChange={(e) => setMinClaimPrice(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
                 placeholder="Enter min claim price"
               />
             </div>
           </form>
-          <div className="mt-4">
+          <div className="modal-footer mt-4">
             <button
-              onClick={handleAddPromo}
+              onClick={() => handleUpdatePromo(id)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save
@@ -147,4 +175,4 @@ const AddPromo = ({ show, onHide }) => {
   );
 };
 
-export default AddPromo;
+export default UpdatePromo;

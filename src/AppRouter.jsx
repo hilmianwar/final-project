@@ -8,10 +8,11 @@ import Categories from "./pages/Categories";
 import DetailDestination from "./pages/DetailDestination";
 import Dashboard from "./pages/Dashboard";
 import Banner from "./pages/Banner";
-import Promo from "./pages/Promo";
 import User from "./pages/User";
 import DashCategories from "./pages/DashCategories";
 import DashPromo from "./pages/DashPromo";
+import DashDestination from "./pages/DashDestination";
+import DashBanner from "./pages/DashBanner";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -24,9 +25,9 @@ const routes = [
     path: "/dashboard",
     element: <Dashboard />,
     children: [
-      { path: "destination", element: <Destination /> },
+      { path: "destination", element: <DashDestination /> },
       { path: "categories", element: <DashCategories /> },
-      { path: "banner", element: <Banner /> },
+      { path: "banner", element: <DashBanner /> },
       { path: "promo", element: <DashPromo /> },
       { path: "user", element: <User /> },
     ],

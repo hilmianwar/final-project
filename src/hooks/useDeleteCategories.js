@@ -4,24 +4,24 @@ import { deleteCategoriesData } from "../utils/apis/data";
 const useDeleteCategories = () => {
   const [successDelete, setSuccessDelete] = useState("");
   const [errDelete, setErrDelete] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
   const handleDeleteCategories = (id, categories, setCategories) => {
     deleteCategoriesData(id)
       .then((res) => {
-        setSuccessDelete("delete Categories succes");
-        setShowModal(true);
+        setSuccessDelete("Delete Categories succes");
+        setShowModalDelete(true);
         setTimeout(() => {
-          setShowModal(false);
+          setShowModalDelete(false);
           setSuccessDelete("");
         }, 2000); //modal disembunyikan setelah 2 detik
         setCategories(categories.filter((category) => category.id !== id)); //otomatis menghapus data tanpa perlu di refresh
       })
       .catch((err) => {
         setErrDelete("Error delete Categories");
-        setShowModal(true);
+        setShowModalDelete(true);
         console.log(err);
         setTimeout(() => {
-          setShowModal(false);
+          setShowModalDelete(false);
           setErrDelete("");
         }, 2000); //modal disembunyikan setelah 2 detik
       });
@@ -30,8 +30,8 @@ const useDeleteCategories = () => {
     handleDeleteCategories,
     successDelete,
     errDelete,
-    showModal,
-    setShowModal,
+    showModalDelete,
+    setShowModalDelete,
   };
 };
 

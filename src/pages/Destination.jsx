@@ -2,13 +2,13 @@ import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useBanner } from "../hooks/useBanner";
-import { useActivities } from "../hooks/useActivities";
 import { MdLocationOn } from "react-icons/md";
 import { useLocation } from "react-router";
+import { useDestination } from "../hooks/useDestination";
 
 const Destination = () => {
   const { banner } = useBanner();
-  const { activities } = useActivities();
+  const { destination } = useDestination();
   const location = useLocation();
 
   const isDashboardDestination = location.pathname === "/dashboard/destination";
@@ -38,7 +38,7 @@ const Destination = () => {
               isDashboardDestination ? "mx-4 lg:mx-10" : ""
             }`}
           >
-            {activities.map((item) => (
+            {destination.map((item) => (
               <div
                 className="h-52 rounded-md transition hover:scale-105"
                 style={{

@@ -2,8 +2,6 @@ import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useBanner } from "../hooks/useBanner";
-import { useActivities } from "../hooks/useActivities";
-import { MdLocationOn } from "react-icons/md";
 import { useCategories } from "../hooks/useCategories";
 
 const Categories = () => {

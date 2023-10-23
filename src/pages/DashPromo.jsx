@@ -1,28 +1,39 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
-import { useCategories } from "../hooks/useCategories";
 import { useTableResponsive } from "../hooks/useTbaelResponsive";
-import { useAddCategories } from "../hooks/useAddCategories";
-import AddCategories from "../components/AddCategories";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiDetail } from "react-icons/bi";
-import useDeleteCategories from "../hooks/useDeleteCategories";
-import DeleteModal from "../components/DeleteModal";
 import usePromo from "../hooks/usePromo";
+import { useAddPromo } from "../hooks/useAddPromo";
+import AddPromo from "../components/AddPromo";
+import useDeletePromo from "../hooks/useDeletePromo";
+import useUpdatePromo from "../hooks/useUpdatePromo";
+import UpdatePromo from "../components/UpdatePromo";
+import MessageModal from "../components/MessageModal";
 
 const DashPromo = () => {
   const { promo, setPromo } = usePromo();
-  const { showAddCategories, setShowAddCategories } = useAddCategories();
+  const { showAddPromo, setShowAddPromo } = useAddPromo();
   const { isSmallView, handleResize } = useTableResponsive();
+
   const {
-    handleDeleteCategories,
+    handleDeletePromo,
     errDelete,
     successDelete,
-    showModal,
-    setShowModal,
-  } = useDeleteCategories();
+    showModalDelete,
+    setShowModalDelete,
+  } = useDeletePromo();
+
+  const {
+    showUpdatePromo,
+    setShowUpdatePromo,
+    promoData,
+    setPromoData,
+    setEditPromoId,
+    editPromoId,
+  } = useUpdatePromo();
 
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
@@ -42,18 +53,23 @@ const DashPromo = () => {
   if (isSmallView) {
     return (
       <div className=" shadow-md rounded my-6 mx-1">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {showAddPromo && (
+          <AddPromo show={showAddPromo} onHide={() => setShowAddPromo(false)} />
+        )}
+        {showUpdatePromo && (
+          <UpdatePromo
+            show={showUpdatePromo}
+            onHide={() => setShowUpdatePromo(false)}
+            promo={promoData}
+            id={editPromoId}
           />
         )}
         <div className="px-4 mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddPromo(true)}
           >
-            Add Categoris
+            Add Promo
           </button>
         </div>
         {currentItem.map((item) => (
@@ -70,17 +86,22 @@ const DashPromo = () => {
               {format(new Date(item.updatedAt), "dd MMMM yyyy")}
             </p>
             <p className="flex">
-              <span className="font-semibold">Role:</span>
+              <span className="font-semibold">Action:</span>
               <span className="flex justify-center items-center px-4 gap-3 text-lg">
                 <button
-                  onClick={() =>
-                    handleDeleteCategories(item.id, categories, setCategories)
-                  }
+                  onClick={() => handleDeletePromo(item.id, promo, setPromo)}
                   title="Delete"
                 >
                   <RiDeleteBin5Line />
                 </button>
-                <button title="Edit">
+                <button
+                  onClick={() => {
+                    setShowUpdatePromo(true);
+                    setEditPromoId(item.id);
+                    setPromoData(item);
+                  }}
+                  title="Update"
+                >
                   <AiOutlineEdit />
                 </button>
                 <button title="Detail">
@@ -96,9 +117,8 @@ const DashPromo = () => {
           totalItems={promo.length}
           itemsPerPage={dataPerPage}
         />
-        <DeleteModal
-          show={showModal}
-          onHide={() => setShowModal(false)}
+        <MessageModal
+          show={showModalDelete}
           err={errDelete}
           succes={successDelete}
         />
@@ -107,18 +127,23 @@ const DashPromo = () => {
   } else {
     return (
       <div className="shadow-md rounded my-6 mx-1 lg:mx-10">
-        {showAddCategories && (
-          <AddCategories
-            show={showAddCategories}
-            onHide={() => setShowAddCategories(false)}
+        {showAddPromo && (
+          <AddPromo show={showAddPromo} onHide={() => setShowAddPromo(false)} />
+        )}
+        {showUpdatePromo && (
+          <UpdatePromo
+            show={showUpdatePromo}
+            onHide={() => setShowUpdatePromo(false)}
+            promo={promoData}
+            id={editPromoId}
           />
         )}
         <div className="flex justify-end mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
+            onClick={() => setShowAddPromo(true)}
           >
-            Add Categoris
+            Add Promo
           </button>
         </div>
         <table className="w-full">
@@ -142,14 +167,19 @@ const DashPromo = () => {
                 </td>
                 <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
                   <button
-                    onClick={() =>
-                      handleDeleteCategories(item.id, categories, setCategories)
-                    }
+                    onClick={() => handleDeletePromo(item.id, promo, setPromo)}
                     title="Delete"
                   >
                     <RiDeleteBin5Line />
                   </button>
-                  <button title="Edit">
+                  <button
+                    onClick={() => {
+                      setShowUpdatePromo(true);
+                      setEditPromoId(item.id);
+                      setPromoData(item);
+                    }}
+                    title="Update"
+                  >
                     <AiOutlineEdit />
                   </button>
                   <button title="Detail">
@@ -166,9 +196,8 @@ const DashPromo = () => {
           totalItems={promo.length}
           itemsPerPage={dataPerPage}
         />
-        <DeleteModal
-          show={showModal}
-          onHide={() => setShowModal(false)}
+        <MessageModal
+          show={showModalDelete}
           err={errDelete}
           succes={successDelete}
         />
