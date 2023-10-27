@@ -8,7 +8,7 @@ const useDeleteCategories = () => {
   const handleDeleteCategories = (id, categories, setCategories) => {
     deleteCategoriesData(id)
       .then((res) => {
-        setSuccessDelete("Delete Categories succes");
+        setSuccessDelete("Delete Categories success");
         setShowModalDelete(true);
         setTimeout(() => {
           setShowModalDelete(false);

@@ -8,15 +8,28 @@ export const useAddCategories = () => {
   const [showAddCategories, setShowAddCategories] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [err, setErr] = useState("");
+  const [showMessageModal, setShowMassageModal] = useState(false);
 
   const handleAddCategories = () => {
     addCategoriesData(name, imageUrl)
       .then((res) => {
         setSuccessMessage("Categories added successfully");
+        setShowMassageModal(true);
+        console.log(res);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
       .catch((err) => {
         setErr("Error adding Categories");
+        setShowMassageModal(true);
+        console.log(err);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
       });
   };
@@ -31,5 +44,7 @@ export const useAddCategories = () => {
     setErr,
     successMessage,
     setSuccessMessage,
+    showMessageModal,
+    setShowMassageModal,
   };
 };

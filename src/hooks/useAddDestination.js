@@ -15,10 +15,10 @@ export const useAddDestination = () => {
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
   const [locationMaps, setLocationMaps] = useState("");
-
   const [showAddDestination, setShowAddDestination] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [err, setErr] = useState("");
+  const [showMessageModal, setShowMassageModal] = useState(false);
 
   const handleAddDestination = () => {
     addDestinationData(
@@ -38,10 +38,22 @@ export const useAddDestination = () => {
     )
       .then((res) => {
         setSuccessMessage("Destination added successfully");
+        setShowMassageModal(true);
+        console.log(res);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
       .catch((err) => {
         setErr("Error adding Destination");
+        setShowMassageModal(true);
+        console.log(err);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
       });
   };
@@ -67,5 +79,7 @@ export const useAddDestination = () => {
     setErr,
     successMessage,
     setSuccessMessage,
+    showMessageModal,
+    setShowMassageModal,
   };
 };

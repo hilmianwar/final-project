@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { updateCategoriesData } from "../utils/apis/data";
-import { useCategories } from "./useCategories";
 
 const useUpdateCategories = () => {
   const [categoriesData, setCategoriesData] = useState([]);
@@ -9,16 +8,16 @@ const useUpdateCategories = () => {
   const [successUpdate, setSuccessUpdate] = useState("");
   const [errUpdate, setErrUpdate] = useState("");
   const [showUpdateCategories, setShowUpdateCategories] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showMessageModal, setShowMassageModal] = useState(false);
   const [editCategoriesId, setEditCategoriesId] = useState(null);
 
   const handleUpdateCategories = (id) => {
     updateCategoriesData(id, name, imageUrl)
       .then((res) => {
-        setSuccessUpdate("Update Categories succes");
-        setShowModal(true);
+        setSuccessUpdate("Update Categories success");
+        setShowMassageModal(true);
         setTimeout(() => {
-          setShowModal(false);
+          setShowMassageModal(false);
           setSuccessUpdate("");
         }, 2000); //modal disembunyikan setelah 2 detik
       })
@@ -35,8 +34,8 @@ const useUpdateCategories = () => {
     successUpdate,
     errUpdate,
     setErrUpdate,
-    showModal,
-    setShowModal,
+    showMessageModal,
+    setShowMassageModal,
     showUpdateCategories,
     setShowUpdateCategories,
     categoriesData,

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useParams } from "react-router";
 
 const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
@@ -38,7 +37,8 @@ export const registerData = (
   name,
   password,
   passwordRepeat,
-  profilPicture
+  profilPicture,
+  phoneNumber
 ) => {
   const payload = {
     email: email,
@@ -46,7 +46,8 @@ export const registerData = (
     password: password,
     passwordRepeat: passwordRepeat,
     role: "admin",
-    profilPictureUrl: profilPicture,
+    profilePictureUrl: profilPicture,
+    phoneNumber: phoneNumber,
   };
 
   return axios
@@ -59,6 +60,13 @@ export const registerData = (
     .catch((err) => {
       throw err;
     });
+};
+
+export const logoutData = () => {
+  return axios.get(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/logout",
+    { headers: headersAuthor }
+  );
 };
 
 export const bannerData = () => {
@@ -103,6 +111,37 @@ export const categoriesData = () => {
   return axios.get(
     "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/categories",
     { headers: headers }
+  );
+};
+
+export const addCategoriesData = (name, imageUrl) => {
+  const payload = {
+    name: name,
+    imageUrl: imageUrl,
+  };
+  return axios.post(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-category",
+    payload,
+    { headers: headersAuthor }
+  );
+};
+
+export const deleteCategoriesData = (id) => {
+  return axios.delete(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-category/${id}`,
+    { headers: headersAuthor }
+  );
+};
+
+export const updateCategoriesData = (id, name, imageUrl) => {
+  const payload = {
+    name: name,
+    imageUrl: imageUrl,
+  };
+  return axios.post(
+    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-category/${id}`,
+    payload,
+    { headers: headersAuthor }
   );
 };
 
@@ -202,44 +241,6 @@ export const promoData = () => {
   );
 };
 
-export const allUserData = () => {
-  return axios.get(
-    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/all-user",
-    { headers: headersAuthor }
-  );
-};
-
-export const addCategoriesData = (name, imageUrl) => {
-  const payload = {
-    name: name,
-    imageUrl: imageUrl,
-  };
-  return axios.post(
-    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/create-category",
-    payload,
-    { headers: headersAuthor }
-  );
-};
-
-export const updateCategoriesData = (id, name, imageUrl) => {
-  const payload = {
-    name: name,
-    imageUrl: imageUrl,
-  };
-  return axios.post(
-    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-category/${id}`,
-    payload,
-    { headers: headersAuthor }
-  );
-};
-
-export const deleteCategoriesData = (id) => {
-  return axios.delete(
-    `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-category/${id}`,
-    { headers: headersAuthor }
-  );
-};
-
 export const addPromoData = (
   name,
   description,
@@ -294,6 +295,39 @@ export const updatePromoData = (
 export const deletePromoData = (id) => {
   return axios.delete(
     `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/delete-promo/${id}`,
+    { headers: headersAuthor }
+  );
+};
+
+export const allUserData = () => {
+  return axios.get(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/all-user",
+    { headers: headersAuthor }
+  );
+};
+
+export const profilData = () => {
+  return axios.get(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/user",
+    { headers: headersAuthor }
+  );
+};
+
+export const updateProfilData = (
+  name,
+  email,
+  profilePictureUrl,
+  phoneNumber
+) => {
+  const payload = {
+    name: name,
+    email: email,
+    profilePictureUrl: profilePictureUrl,
+    phoneNumber: phoneNumber,
+  };
+  return axios.post(
+    "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/update-profile",
+    payload,
     { headers: headersAuthor }
   );
 };

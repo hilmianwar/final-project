@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="text-white font-monts text-sm bg-neutral-900 ">
+    <div className="text-white font-monts text-sm bg-neutral-900 py-6 ">
       <div className="flex justify-center items-center text-center lg:text-start flex-col lg:flex-row lg:justify-between lg:mx-32">
         <div className="w-96  lg:text-justify mb-8 lg:mb-0">
           <h2 className="text-xl font-semibold">Voyager Travel</h2>
@@ -41,11 +41,11 @@ const Footer = () => {
         <div className="flex gap-5">
           <div className="flex flex-col text-md leading-8">
             <h2 className="text-xl font-semibold">Useful Link</h2>
-            <Link to="" className="mt-4">
-              User
+            <Link to="/categories" className="mt-4">
+              Categories
             </Link>
-            <Link to="">Categories</Link>
-            <Link to="">Destination</Link>
+            <Link to="/destination">Destination</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </div>
         </div>
       </div>

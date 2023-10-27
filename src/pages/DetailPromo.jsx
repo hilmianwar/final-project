@@ -1,22 +1,21 @@
 import React from "react";
 import { format } from "date-fns";
-import useDetailDestination from "../hooks/useDetailDestination";
+import useDetailPromo from "../hooks/useDetailPromo";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router";
 
-const DetailDestination = () => {
-  const { destination } = useDetailDestination();
+const DetailPromo = () => {
+  const { promo } = useDetailPromo();
   const location = useLocation();
 
-  if (!destination) {
+  if (!promo) {
     return <div>Loading...</div>;
   }
 
   const isDashboardDestination = location.pathname.includes(
-    "/dashboard/destination/detail/"
+    "/dashboard/promo/detail/"
   );
-
   return (
     <div>
       {!isDashboardDestination && <Header />}
@@ -26,13 +25,13 @@ const DetailDestination = () => {
         }`}
       >
         <h1 className="text-center font-monts text-2xl text-white">
-          Detail Destination
+          Detail Promo
         </h1>
         <div className="flex lg:flex-row flex-col gap-10 mt-10 w-full justify-center items-center lg:items-start">
           <div
             className="lg:h-96 h-40 w-80 lg:w-1/2 border border-neutral-700 rounded-md"
             style={{
-              backgroundImage: `url(${destination?.imageUrls})`,
+              backgroundImage: `url(${promo?.imageUrl})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -40,13 +39,13 @@ const DetailDestination = () => {
           <div className="md:w-3/4 lg:w-1/2 text-white text-sm">
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>Category Id</span> <span>: </span>
+                <span>Id</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.categoryId}
+                {promo?.id}
               </span>
             </p>
             <p className="flex mb-2">
@@ -57,7 +56,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.title}
+                {promo?.name}
               </span>
             </p>
             <p className="flex mb-2">
@@ -68,118 +67,63 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.description}
+                {promo?.description}
               </span>
             </p>
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>Image Urls</span> <span>: </span>
+                <span>Image Url</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.imageUrls}
-              </span>
-            </p>
-            <p className="flex mb-2">
-              <span className="font-semibold w-2/5 flex justify-between">
-                <span>Price</span> <span>: </span>
-              </span>
-              <span
-                className="w-full pl-2 text-justify"
-                style={{ wordBreak: "break-word" }}
-              >
-                {destination?.price}
-              </span>
-            </p>
-            <p className="flex mb-2">
-              <span className="font-semibold w-2/5 flex justify-between">
-                <span>Price Discount</span> <span>: </span>
-              </span>
-              <span
-                className="w-full pl-2 text-justify"
-                style={{ wordBreak: "break-word" }}
-              >
-                {destination?.price_discount}
-              </span>
-            </p>
-            <p className="flex mb-2">
-              <span className="font-semibold w-2/5 flex justify-between">
-                <span>Rating</span> <span>: </span>
-              </span>
-              <span
-                className="w-full pl-2 text-justify"
-                style={{ wordBreak: "break-word" }}
-              >
-                {destination?.rating}
-              </span>
-            </p>
-            <p className="flex mb-2">
-              <span className="font-semibold w-2/5 flex justify-between">
-                <span>Total Reviews</span> <span>: </span>
-              </span>
-              <span
-                className="w-full pl-2 text-justify"
-                style={{ wordBreak: "break-word" }}
-              >
-                {destination?.total_reviews}
-              </span>
-            </p>
-            <p className="flex mb-2">
-              <span className="font-semibold w-2/5 flex justify-between">
-                <span>Facilities</span> <span>: </span>
-              </span>
-              <span
-                className="w-full pl-2 text-justify"
-                style={{ wordBreak: "break-word" }}
-              >
-                {destination?.facilities}
+                {promo?.imageUrl}
               </span>
             </p>
 
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>Address</span> <span>: </span>
+                <span>Term Condition</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.address}
+                {promo?.terms_condition}
               </span>
             </p>
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>Province</span> <span>: </span>
+                <span>Promo Code</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.province}
+                {promo?.promo_code}
               </span>
             </p>
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>City</span> <span>: </span>
+                <span>Promo disc Price</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.city}
+                {promo?.promo_discount_price}
               </span>
             </p>
             <p className="flex mb-2">
               <span className="font-semibold w-2/5 flex justify-between">
-                <span>Location Maps</span> <span>: </span>
+                <span>Min Claim Price</span> <span>: </span>
               </span>
               <span
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.location_maps}
+                {promo?.minimum_claim_price}
               </span>
             </p>
             <p className="flex mb-2">
@@ -190,7 +134,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {format(new Date(destination?.createdAt), "dd MMMM yyyy")}
+                {format(new Date(promo?.createdAt), "dd MMMM yyyy")}
               </span>
             </p>
             <p className="flex mb-2">
@@ -201,7 +145,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {format(new Date(destination?.updatedAt), "dd MMMM yyyy")}
+                {format(new Date(promo?.updatedAt), "dd MMMM yyyy")}
               </span>
             </p>
           </div>
@@ -212,4 +156,4 @@ const DetailDestination = () => {
   );
 };
 
-export default DetailDestination;
+export default DetailPromo;

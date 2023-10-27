@@ -12,6 +12,7 @@ export const useAddPromo = () => {
   const [showAddPromo, setShowAddPromo] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [err, setErr] = useState("");
+  const [showMessageModal, setShowMassageModal] = useState(false);
 
   const handleAddPromo = () => {
     addPromoData(
@@ -25,10 +26,22 @@ export const useAddPromo = () => {
     )
       .then((res) => {
         setSuccessMessage("Promo added successfully");
+        setShowMassageModal(true);
+        console.log(res);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
       .catch((err) => {
         setErr("Error adding Promo");
+        setShowMassageModal(true);
+        console.log(err);
+        setTimeout(() => {
+          setShowMassageModal(false);
+          setSuccessMessage("");
+        }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
       });
   };
@@ -48,5 +61,7 @@ export const useAddPromo = () => {
     setErr,
     successMessage,
     setSuccessMessage,
+    showMessageModal,
+    setShowMassageModal,
   };
 };

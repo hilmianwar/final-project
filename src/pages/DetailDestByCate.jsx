@@ -1,30 +1,16 @@
 import React from "react";
 import { format } from "date-fns";
-import useDetailDestination from "../hooks/useDetailDestination";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { useLocation } from "react-router";
+import useDetailDestByCat from "../hooks/useDestByCategories";
 
-const DetailDestination = () => {
-  const { destination } = useDetailDestination();
-  const location = useLocation();
+const DetailDestByCat = () => {
+  const { destByCat } = useDetailDestByCat();
 
-  if (!destination) {
+  if (!destByCat) {
     return <div>Loading...</div>;
   }
-
-  const isDashboardDestination = location.pathname.includes(
-    "/dashboard/destination/detail/"
-  );
-
   return (
     <div>
-      {!isDashboardDestination && <Header />}
-      <div
-        className={`flex flex-col justify-center items-center  mb-6 py-10  ${
-          isDashboardDestination ? "mx-2 lg:mx-20 pt-2" : "mx-2 lg:mx-32 pt-32"
-        }`}
-      >
+      <div className="flex flex-col justify-center items-center mx-2 lg:mx-20 mb-6">
         <h1 className="text-center font-monts text-2xl text-white">
           Detail Destination
         </h1>
@@ -32,7 +18,7 @@ const DetailDestination = () => {
           <div
             className="lg:h-96 h-40 w-80 lg:w-1/2 border border-neutral-700 rounded-md"
             style={{
-              backgroundImage: `url(${destination?.imageUrls})`,
+              backgroundImage: `url(${destByCat?.imageUrls})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -46,7 +32,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.categoryId}
+                {destByCat?.categoryId}
               </span>
             </p>
             <p className="flex mb-2">
@@ -57,7 +43,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.title}
+                {destByCat?.title}
               </span>
             </p>
             <p className="flex mb-2">
@@ -68,7 +54,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.description}
+                {destByCat?.description}
               </span>
             </p>
             <p className="flex mb-2">
@@ -79,7 +65,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.imageUrls}
+                {destByCat?.imageUrls}
               </span>
             </p>
             <p className="flex mb-2">
@@ -90,7 +76,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.price}
+                {destByCat?.price}
               </span>
             </p>
             <p className="flex mb-2">
@@ -101,7 +87,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.price_discount}
+                {destByCat?.price_discount}
               </span>
             </p>
             <p className="flex mb-2">
@@ -112,7 +98,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.rating}
+                {destByCat?.rating}
               </span>
             </p>
             <p className="flex mb-2">
@@ -123,7 +109,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.total_reviews}
+                {destByCat?.total_reviews}
               </span>
             </p>
             <p className="flex mb-2">
@@ -134,7 +120,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.facilities}
+                {destByCat?.facilities}
               </span>
             </p>
 
@@ -146,7 +132,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.address}
+                {destByCat?.address}
               </span>
             </p>
             <p className="flex mb-2">
@@ -157,7 +143,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.province}
+                {destByCat?.province}
               </span>
             </p>
             <p className="flex mb-2">
@@ -168,7 +154,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.city}
+                {destByCat?.city}
               </span>
             </p>
             <p className="flex mb-2">
@@ -179,7 +165,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {destination?.location_maps}
+                {destByCat?.location_maps}
               </span>
             </p>
             <p className="flex mb-2">
@@ -190,7 +176,7 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {format(new Date(destination?.createdAt), "dd MMMM yyyy")}
+                {format(new Date(destByCat?.createdAt), "dd MMMM yyyy")}
               </span>
             </p>
             <p className="flex mb-2">
@@ -201,15 +187,14 @@ const DetailDestination = () => {
                 className="w-full pl-2 text-justify"
                 style={{ wordBreak: "break-word" }}
               >
-                {format(new Date(destination?.updatedAt), "dd MMMM yyyy")}
+                {format(new Date(destByCat?.updatedAt), "dd MMMM yyyy")}
               </span>
             </p>
           </div>
         </div>
       </div>
-      {!isDashboardDestination && <Footer />}
     </div>
   );
 };
 
-export default DetailDestination;
+export default DetailDestByCat;

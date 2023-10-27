@@ -6,7 +6,7 @@ const WhyUs = () => {
   const { categories } = useCategories();
 
   return (
-    <div className="text-white text-sm relative font-monts flex flex-col justify-center items-center my-10 mx-16 mt-20 lg:-mt-20 lg:mx-32">
+    <div className="text-white text-sm relative font-monts flex flex-col justify-center items-center my-10 pt-10 mx-16 mt-20 lg:-mt-20 lg:mx-32">
       <div className="text-center mb-8">
         <h2 className="text-md">What Makes Us Different</h2>
         {/* <h2 className="text-md">WHAT MAKES US DIFFERENT</h2> */}

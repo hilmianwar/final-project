@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { updateBannerData, updateCategoriesData } from "../utils/apis/data";
-import { useCategories } from "./useCategories";
+import { useState } from "react";
+import { updateBannerData } from "../utils/apis/data";
 
 const useUpdateBanner = () => {
   const [bannerData, setBannerData] = useState([]);
@@ -15,7 +14,7 @@ const useUpdateBanner = () => {
   const handleUpdateBanner = (id) => {
     updateBannerData(id, name, imageUrl)
       .then((res) => {
-        setSuccessUpdate("Update Categories succes");
+        setSuccessUpdate("Update Banner succes");
         setShowMassageModal(true);
         setTimeout(() => {
           setShowMassageModal(false);
@@ -23,7 +22,7 @@ const useUpdateBanner = () => {
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
-        setErrUpdate("error Update Categories");
+        setErrUpdate("error Update Banner");
       });
   };
   return {

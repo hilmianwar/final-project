@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import React from "react";
 import useUpdatePromo from "../hooks/useUpdatePromo";
+import MessageModal from "./MessageModal";
 
 const UpdatePromo = ({ show, onHide, promo, id }) => {
   const {
@@ -23,6 +24,7 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
     setErrUpdate,
     successUpdate,
     setSuccessUpdate,
+    showMessageModal,
   } = useUpdatePromo();
 
   useEffect(() => {
@@ -54,22 +56,11 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
             <h3 className="font-semibold">Update Promo</h3>
           </div>
           <form>
-            {!!errUpdate.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{errUpdate}</p>
-                <button onClick={() => setErrUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
-            {!!successUpdate.length && (
-              <div className=" bg-green-500 p-2 rounded-md flex justify-between">
-                <p>{successUpdate}</p>
-                <button onClick={() => setSuccessUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
+            <MessageModal
+              show={showMessageModal}
+              err={errUpdate}
+              succes={successUpdate}
+            />
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Name

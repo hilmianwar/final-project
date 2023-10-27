@@ -8,7 +8,7 @@ const useDeleteBanner = () => {
   const handleDeleteBanner = (id, banner, setBanner) => {
     deleteBannerData(id)
       .then((res) => {
-        setSuccessDelete("Delete Categories succes");
+        setSuccessDelete("Delete Banner success");
         setShowMassageModal(true);
         setTimeout(() => {
           setShowMassageModal(false);
@@ -17,7 +17,7 @@ const useDeleteBanner = () => {
         setBanner(banner.filter((banner) => banner.id !== id)); //otomatis menghapus data tanpa perlu di refresh
       })
       .catch((err) => {
-        setErrDelete("Error delete Categories");
+        setErrDelete("Error delete Banner");
         setShowMassageModal(true);
         console.log(err);
         setTimeout(() => {

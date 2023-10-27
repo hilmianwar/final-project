@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
 import { BiMenu } from "react-icons/bi";
 import SideList from "./SideList";
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(() => {
+    // menginisialisasi open dengan nilai awal seperti di bawah
+    const storedOpen = localStorage.getItem("open");
+    return storedOpen ? JSON.parse(storedOpen) : true;
+  });
+
+  useEffect(() => {
+    // Simpan nilai 'open' di dalam localStorage setiap kali nilainya berubah.
+    localStorage.setItem("open", JSON.stringify(open));
+  }, [open]);
 
   const handleResize = () => {
     if (window.innerWidth <= 900) {

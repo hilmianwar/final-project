@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header
       className={`flex justify-between px-20 md:px-32 py-8 fixed transition w-full z-50 ${
-        scroll ? "bg-black bg-opacity-40 " : ""
+        scroll ? "bg-black bg-opacity-50 " : ""
       }`}
     >
       <Logo />

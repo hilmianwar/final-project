@@ -1,51 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import login from "../assets/image/login.jpg";
 import { Link } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
+import MessageModal from "../components/MessageModal";
 
 const Login = () => {
-  const { email, setEmail, password, setPassword, handleSubmit, err, setErr } =
-    useLogin();
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [err, setErr] = useState("");
-
-  // const handleSubmit = () => {
-  //   const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
-
-  //   const payload = {
-  //     email: email,
-  //     password: password,
-  //   };
-
-  //   const headers = {
-  //     apiKey: apiKey,
-  //     "Content-Type": "application/json",
-  //   };
-
-  //   axios
-  //     .post(
-  //       "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/login",
-  //       payload,
-  //       { headers: headers }
-  //     )
-  //     .then((res) => {
-  //       localStorage.setItem("token", res.data.token);
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       setErr(err.response.data.message);
-  //       console.log(err);
-  //     });
-  // };
-
-  // const handleClose = () => {
-  //   setErr("");
-  // };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    handleSubmit,
+    showModalLogin,
+    successLogin,
+    errLogin,
+  } = useLogin();
 
   return (
-    <>
+    <div>
+      <MessageModal
+        show={showModalLogin}
+        err={errLogin}
+        succes={successLogin}
+      />
       <div className="bg-black h-screen w-full flex">
         <div className="bg-black relatif w-1/2 h-screen hidden md:block">
           <div className="absolute text-white mt-24 ml-14">
@@ -61,14 +38,6 @@ const Login = () => {
             <div className="text-3xl">
               <h3>Login</h3>
             </div>
-            {!!err.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{err}</p>
-                <button onClick={() => setErr("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
             <div className="flex flex-col">
               <input
                 className="rounded-sm mb-6 py-3 bg-transparent border-b border-white outline-none placeholder:text-gray-400"
@@ -100,7 +69,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

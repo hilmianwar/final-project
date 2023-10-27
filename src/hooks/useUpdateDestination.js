@@ -41,7 +41,7 @@ const useUpdateDestination = () => {
       locationMaps
     )
       .then((res) => {
-        setSuccessUpdate("Update Destination succes");
+        setSuccessUpdate("Update Destination success");
         setShowModal(true);
         setTimeout(() => {
           setShowModal(false);

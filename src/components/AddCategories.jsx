@@ -1,5 +1,6 @@
 import React from "react";
 import { useAddCategories } from "../hooks/useAddCategories";
+import MessageModal from "./MessageModal";
 
 const AddCategories = ({ show, onHide }) => {
   const {
@@ -10,6 +11,7 @@ const AddCategories = ({ show, onHide }) => {
     setErr,
     successMessage,
     setSuccessMessage,
+    showMessageModal,
   } = useAddCategories();
   return (
     <div
@@ -28,22 +30,12 @@ const AddCategories = ({ show, onHide }) => {
             <h3 className="font-semibold">Add Categories</h3>
           </div>
           <form>
-            {!!err.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{err}</p>
-                <button onClick={() => setErr("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
-            {!!successMessage.length && (
-              <div className=" bg-green-500 p-2 rounded-md flex justify-between">
-                <p>{successMessage}</p>
-                <button onClick={() => setSuccessMessage("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
+            <MessageModal
+              show={showMessageModal}
+              err={err}
+              succes={successMessage}
+            />
+
             <div className="mb-9">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Name

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { promoData } from "../utils/apis/data";
+import { useNavigate } from "react-router";
 
 const usePromo = () => {
   const [promo, setPromo] = useState([]);
+  const [errPromo, setErrPromo] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const responsive = {
     superLargeDesktop: {
@@ -27,8 +32,11 @@ const usePromo = () => {
     promoData()
       .then((res) => {
         setPromo(res.data.data);
+        setIsLoading(false); //matikan isLoading ketika datanya sudah dapat
       })
       .catch((err) => {
+        setErrPromo(err.message);
+        setIsLoading(false); //matikan isLoading ketika datanya sudah dapat
         console.log(err);
       });
   };
@@ -37,7 +45,7 @@ const usePromo = () => {
     getPromoData();
   }, []);
 
-  return { promo, setPromo, responsive };
+  return { promo, setPromo, responsive, navigate, errPromo, isLoading };
 };
 
 export default usePromo;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useBanner } from "../hooks/useBanner";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
@@ -27,14 +27,14 @@ const BannerComp = () => {
             excitement of exploring new places.
           </p>
         </div>
-        {banner.map((item, index) => (
+        {banner?.map((item, index) => (
           <div
             key={index}
             className={`w-full h-full object-cover brightness-50  ${
               index === current ? "block" : "hidden"
             }`}
             style={{
-              background: `url(${item.imageUrl})`,
+              background: `url(${item?.imageUrl})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

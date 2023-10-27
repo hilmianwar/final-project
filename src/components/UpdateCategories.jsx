@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import React from "react";
 import useUpdateCategories from "../hooks/useUpdateCategories";
+import MessageModal from "./MessageModal";
 
 const UpdateCategories = ({ show, onHide, categories, id }) => {
   const {
@@ -9,6 +10,8 @@ const UpdateCategories = ({ show, onHide, categories, id }) => {
     setName,
     setImageUrl,
     handleUpdateCategories,
+    showMessageModal,
+    setShowMassageModal,
     errUpdate,
     setErrUpdate,
     successUpdate,
@@ -39,22 +42,11 @@ const UpdateCategories = ({ show, onHide, categories, id }) => {
             <h3 className="font-semibold">Update Categories</h3>
           </div>
           <form>
-            {!!errUpdate.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{errUpdate}</p>
-                <button onClick={() => setErrUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
-            {!!successUpdate.length && (
-              <div className=" bg-green-500 p-2 rounded-md flex justify-between">
-                <p>{successUpdate}</p>
-                <button onClick={() => setSuccessUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
+            <MessageModal
+              show={showMessageModal}
+              err={errUpdate}
+              succes={successUpdate}
+            />
             <div className="mb-9">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Name

@@ -14,7 +14,7 @@ const useUpdatePromo = () => {
   const [successUpdate, setSuccessUpdate] = useState("");
   const [errUpdate, setErrUpdate] = useState("");
   const [showUpdatePromo, setShowUpdatePromo] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showMessageModal, setShowMassageModal] = useState(false);
   const [editPromoId, setEditPromoId] = useState(null);
 
   const handleUpdatePromo = (id) => {
@@ -29,15 +29,15 @@ const useUpdatePromo = () => {
       minClaimPrice
     )
       .then((res) => {
-        setSuccessUpdate("Update Categories succes");
-        setShowModal(true);
+        setSuccessUpdate("Update Promo succes");
+        setShowMassageModal(true);
         setTimeout(() => {
-          setShowModal(false);
+          setShowMassageModal(false);
           setSuccessUpdate("");
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
-        setErrUpdate("error Update Categories");
+        setErrUpdate("error Update Promo");
       });
   };
   return {
@@ -61,8 +61,8 @@ const useUpdatePromo = () => {
     successUpdate,
     errUpdate,
     setErrUpdate,
-    showModal,
-    setShowModal,
+    showMessageModal,
+    setShowMassageModal,
     showUpdatePromo,
     setShowUpdatePromo,
     editPromoId,

@@ -4,13 +4,18 @@ import { bannerData } from "../utils/apis/data";
 export const useBanner = () => {
   const [banner, setBanner] = useState([]);
   const [current, setCurrent] = useState(0);
+  const [errBanner, setErrBanner] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const getBannerData = () => {
     bannerData()
       .then((res) => {
         setBanner(res.data.data);
+        setIsLoading(false); //matikan isLoading ketika datanya sudah dapat
       })
       .catch((err) => {
+        setErrBanner(err.message);
+        setIsLoading(false);
         console.log(err);
       });
   };
@@ -32,5 +37,13 @@ export const useBanner = () => {
     getBannerData();
   }, []);
 
-  return { banner, setBanner, current, nextSlide, prevSlide };
+  return {
+    banner,
+    setBanner,
+    current,
+    nextSlide,
+    prevSlide,
+    errBanner,
+    isLoading,
+  };
 };

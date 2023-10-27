@@ -8,7 +8,7 @@ const useDeletePromo = () => {
   const handleDeletePromo = (id, promo, setPromo) => {
     deletePromoData(id)
       .then((res) => {
-        setSuccessDelete("Delete Categories succes");
+        setSuccessDelete("Delete Promo success");
         setShowModalDelete(true);
         setTimeout(() => {
           setShowModalDelete(false);
@@ -17,7 +17,7 @@ const useDeletePromo = () => {
         setPromo(promo.filter((promo) => promo.id !== id)); //otomatis menghapus data tanpa perlu di refresh
       })
       .catch((err) => {
-        setErrDelete("Error delete Categories");
+        setErrDelete("Error delete Promo");
         setShowModalDelete(true);
         console.log(err);
         setTimeout(() => {

@@ -1,21 +1,9 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
-import { useCategories } from "../hooks/useCategories";
-import { useTableResponsive } from "../hooks/useTbaelResponsive";
-import { useAddCategories } from "../hooks/useAddCategories";
-import AddCategories from "../components/AddCategories";
-import UpdateCategories from "../components/UpdateCategories";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiDetail } from "react-icons/bi";
-import useDeleteCategories from "../hooks/useDeleteCategories";
-import DeleteModal from "../components/MessageModal";
-import AddDestination from "../components/AddDestination";
-import { useAddDestination } from "../hooks/useAddDestination";
-import useDeleteDestination from "../hooks/useDeleteDestination";
-import useUpdateDestination from "../hooks/useUpdateDestination";
-import UpdateDestination from "../components/UpdateDestination";
 import { useBanner } from "../hooks/useBanner";
 import MessageModal from "../components/MessageModal";
 import { useAddBanner } from "../hooks/useAddBanner";
@@ -23,9 +11,11 @@ import AddBanner from "../components/AddBanner";
 import useDeleteBanner from "../hooks/useDeleteBanner";
 import useUpdateBanner from "../hooks/useUpdateBanner";
 import UpdateBanner from "../components/UpdateBanner";
+import { useNavigate } from "react-router";
+import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashBanner = () => {
-  const { banner, setBanner } = useBanner();
+  const { banner, setBanner, errBanner, isLoading } = useBanner();
   const { showAddBanner, setShowAddBanner } = useAddBanner();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
@@ -44,6 +34,8 @@ const DashBanner = () => {
     setEditBannerId,
   } = useUpdateBanner();
 
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
 
@@ -59,9 +51,17 @@ const DashBanner = () => {
 
   window.addEventListener("resize", handleResize);
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Menampilkan pesan "Loading..." ketika isLoading adalah true
+  }
+
+  if (errBanner) {
+    return <div>{errBanner}</div>; //menampilkan pesan error ketika errBanner adalah true
+  }
+
   if (isSmallView) {
     return (
-      <div className=" shadow-md rounded my-6 mx-1">
+      <div className=" shadow-md rounded my-6 mx-1 font-mont">
         {/* memunculkan form add banner  */}
         {showAddBanner && (
           <AddBanner
@@ -78,7 +78,9 @@ const DashBanner = () => {
             id={editBannerId}
           />
         )}
-
+        <div className="my-10 px-4">
+          <h1 className="text-lg">Banner</h1>
+        </div>
         <div className="px-4 mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
@@ -88,23 +90,25 @@ const DashBanner = () => {
           </button>
         </div>
         {currentItem.map((item) => (
-          <div key={item.id} className="p-4">
+          <div key={item?.id} className="p-4 text-sm">
             <p>
-              <span className="font-semibold">Name:</span> {item.name}
+              <span className="font-semibold">Name:</span> {item?.name}
             </p>
             <p>
               <span className="font-semibold">Created At:</span>{" "}
-              {format(new Date(item.createdAt), "dd MMMM yyyy")}
+              {format(new Date(item?.createdAt), "dd MMMM yyyy")}
             </p>
             <p>
               <span className="font-semibold">Updated At:</span>{" "}
-              {format(new Date(item.updatedAt), "dd MMMM yyyy")}
+              {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
             </p>
             <p className="flex">
               <span className="font-semibold">Action:</span>
               <span className="flex justify-center items-center px-4 gap-3 text-lg">
                 <button
-                  onClick={() => handleDeleteBanner(item.id, banner, setBanner)}
+                  onClick={() =>
+                    handleDeleteBanner(item?.id, banner, setBanner)
+                  }
                   title="Delete"
                 >
                   <RiDeleteBin5Line />
@@ -112,14 +116,19 @@ const DashBanner = () => {
                 <button
                   onClick={() => {
                     setShowUpdateBanner(true);
-                    setEditBannerId(item.id);
+                    setEditBannerId(item?.id);
                     setBannerData(item);
                   }}
                   title="Update"
                 >
                   <AiOutlineEdit />
                 </button>
-                <button title="Detail">
+                <button
+                  onClick={() =>
+                    navigate(`/dashboard/banner/detail/${item?.id}`)
+                  }
+                  title="Detail"
+                >
                   <BiDetail />
                 </button>
               </span>
@@ -129,7 +138,7 @@ const DashBanner = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={banner.length}
+          totalItems={banner?.length}
           itemsPerPage={dataPerPage}
         />
         {/* memunculkan pesan error ataupun succes delete*/}
@@ -142,7 +151,7 @@ const DashBanner = () => {
     );
   } else {
     return (
-      <div className="shadow-md rounded my-6 mx-1 lg:mx-10">
+      <div className="shadow-md rounded my-6 mx-1 lg:mx-10 font-mont">
         {showAddBanner && (
           <AddBanner
             show={showAddBanner}
@@ -157,6 +166,9 @@ const DashBanner = () => {
             id={editBannerId}
           />
         )}
+        <div className="mt-10">
+          <h1 className="text-lg">Banner</h1>
+        </div>
         <div className="flex justify-end mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
@@ -175,19 +187,19 @@ const DashBanner = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItem.map((item) => (
+            {currentItem?.map((item) => (
               <tr key={item.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item.name}</td>
+                <td className="px-4 h-12 w-1/4">{item?.name}</td>
                 <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item.createdAt), "dd MMMM yyyy")}
+                  {format(new Date(item?.createdAt), "dd MMMM yyyy")}
                 </td>
                 <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item.updatedAt), "dd MMMM yyyy")}
+                  {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
                 </td>
                 <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
                   <button
                     onClick={() =>
-                      handleDeleteBanner(item.id, banner, setBanner)
+                      handleDeleteBanner(item?.id, banner, setBanner)
                     }
                     title="Delete"
                   >
@@ -196,14 +208,19 @@ const DashBanner = () => {
                   <button
                     onClick={() => {
                       setShowUpdateBanner(true);
-                      setEditBannerId(item.id);
+                      setEditBannerId(item?.id);
                       setBannerData(item);
                     }}
                     title="Update"
                   >
                     <AiOutlineEdit />
                   </button>
-                  <button title="Detail">
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/banner/detail/${item?.id}`)
+                    }
+                    title="Detail"
+                  >
                     <BiDetail />
                   </button>
                 </td>
@@ -214,7 +231,7 @@ const DashBanner = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={banner.length}
+          totalItems={banner?.length}
           itemsPerPage={dataPerPage}
         />
         {/* memunculkan pesan error ataupun succes delete*/}

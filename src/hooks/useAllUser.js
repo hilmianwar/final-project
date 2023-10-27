@@ -3,25 +3,25 @@ import { allUserData } from "../utils/apis/data";
 
 export const useAllUser = () => {
   const [allUser, setAllUser] = useState([]);
-  const [isSmallView, setIsSmallView] = useState(window.innerWidth <= 768);
+  const [errUser, setErrUser] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAllUser = () => {
     allUserData()
       .then((res) => {
         setAllUser(res.data.data);
+        setIsLoading(false); //matikan isLoading ketika datanya sudah dapat
       })
       .catch((err) => {
+        setErrUser(err.message);
+        setIsLoading(false);
         console.log(err);
       });
-  };
-
-  const handleResize = () => {
-    setIsSmallView(window.innerWidth <= 768);
   };
 
   useEffect(() => {
     getAllUser();
   }, []);
 
-  return { allUser, isSmallView, handleResize };
+  return { allUser, isLoading, errUser };
 };

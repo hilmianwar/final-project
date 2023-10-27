@@ -8,7 +8,7 @@ const useDeleteDestination = () => {
   const handleDeleteDestination = (id, destination, setDestination) => {
     deleteDestinationData(id)
       .then((res) => {
-        setSuccessDelete("Delete Categories succes");
+        setSuccessDelete("Delete Destination success");
         setShowModalDelete(true);
         setTimeout(() => {
           setShowModalDelete(false);
@@ -19,7 +19,7 @@ const useDeleteDestination = () => {
         ); //otomatis menghapus data tanpa perlu di refresh
       })
       .catch((err) => {
-        setErrDelete("Error delete Categories");
+        setErrDelete("Error delete Destination");
         setShowModalDelete(true);
         console.log(err);
         setTimeout(() => {

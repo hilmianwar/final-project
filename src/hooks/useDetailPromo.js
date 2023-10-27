@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 
-const useDetailDestination = () => {
-  const [destination, setDestination] = useState();
+const useDetailPromo = () => {
+  const [promo, setPromo] = useState();
   const param = useParams();
   const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 
@@ -12,14 +12,14 @@ const useDetailDestination = () => {
     "Content-Type": "application/json",
   };
 
-  const getDetailDestination = () => {
+  const getDetailPromo = () => {
     axios
       .get(
-        `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/activity/${param.userId}`,
+        `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/promo/${param.userId}`,
         { headers: headers }
       )
       .then((res) => {
-        setDestination(res.data.data);
+        setPromo(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -27,10 +27,10 @@ const useDetailDestination = () => {
   };
 
   useEffect(() => {
-    getDetailDestination();
+    getDetailPromo();
   }, []);
 
-  return { destination, param };
+  return { promo, param };
 };
 
-export default useDetailDestination;
+export default useDetailPromo;

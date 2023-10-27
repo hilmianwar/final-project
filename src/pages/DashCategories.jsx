@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
 import { useCategories } from "../hooks/useCategories";
-import { useTableResponsive } from "../hooks/useTbaelResponsive";
 import { useAddCategories } from "../hooks/useAddCategories";
 import AddCategories from "../components/AddCategories";
 import UpdateCategories from "../components/UpdateCategories";
@@ -12,9 +11,12 @@ import { BiDetail } from "react-icons/bi";
 import useDeleteCategories from "../hooks/useDeleteCategories";
 import useUpdateCategories from "../hooks/useUpdateCategories";
 import MessageModal from "../components/MessageModal";
+import { useNavigate } from "react-router";
+import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashCategories = () => {
-  const { categories, setCategories } = useCategories();
+  const { categories, setCategories, errCategories, isLoading } =
+    useCategories();
   const { showAddCategories, setShowAddCategories } = useAddCategories();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
@@ -33,6 +35,8 @@ const DashCategories = () => {
     editCategoriesId,
   } = useUpdateCategories();
 
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
 
@@ -48,9 +52,17 @@ const DashCategories = () => {
 
   window.addEventListener("resize", handleResize);
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Menampilkan pesan "Loading..." ketika isLoading adalah true
+  }
+
+  if (errCategories) {
+    return <div>{errCategories}</div>; //menampilkan pesan error ketika errCategories adalah true
+  }
+
   if (isSmallView) {
     return (
-      <div className=" shadow-md rounded my-6 mx-1">
+      <div className=" shadow-md rounded my-6 mx-1 font-mont">
         {showAddCategories && (
           <AddCategories
             show={showAddCategories}
@@ -65,7 +77,9 @@ const DashCategories = () => {
             id={editCategoriesId}
           />
         )}
-
+        <div className="my-10 px-4">
+          <h1 className="text-lg">Categories</h1>
+        </div>
         <div className="px-4 mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
@@ -75,24 +89,24 @@ const DashCategories = () => {
           </button>
         </div>
         {currentItem.map((item) => (
-          <div key={item.id} className="p-4">
+          <div key={item?.id} className="p-4 text-sm">
             <p>
-              <span className="font-semibold">Name:</span> {item.name}
+              <span className="font-semibold">Name:</span> {item?.name}
             </p>
             <p>
               <span className="font-semibold">Created At:</span>{" "}
-              {format(new Date(item.createdAt), "dd MMMM yyyy")}
+              {format(new Date(item?.createdAt), "dd MMMM yyyy")}
             </p>
             <p>
               <span className="font-semibold">Updated At:</span>{" "}
-              {format(new Date(item.updatedAt), "dd MMMM yyyy")}
+              {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
             </p>
             <p className="flex">
               <span className="font-semibold">Action:</span>
               <span className="flex justify-center items-center px-4 gap-3 text-lg">
                 <button
                   onClick={() =>
-                    handleDeleteCategories(item.id, categories, setCategories)
+                    handleDeleteCategories(item?.id, categories, setCategories)
                   }
                   title="Delete"
                 >
@@ -101,14 +115,19 @@ const DashCategories = () => {
                 <button
                   onClick={() => {
                     setShowUpdateCategories(true);
-                    setEditCategoriesId(item.id);
+                    setEditCategoriesId(item?.id);
                     setCategoriesData(item);
                   }}
                   title="Update"
                 >
                   <AiOutlineEdit />
                 </button>
-                <button title="Detail">
+                <button
+                  onClick={() =>
+                    navigate(`/dashboard/categories/detail/${item?.id}`)
+                  }
+                  title="Detail"
+                >
                   <BiDetail />
                 </button>
               </span>
@@ -118,7 +137,7 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={categories?.length}
           itemsPerPage={dataPerPage}
         />
         <MessageModal
@@ -130,7 +149,7 @@ const DashCategories = () => {
     );
   } else {
     return (
-      <div className="shadow-md rounded my-6 mx-1 lg:mx-10">
+      <div className="shadow-md rounded my-6 mx-1 lg:mx-10 font-mont">
         {showAddCategories && (
           <AddCategories
             show={showAddCategories}
@@ -145,6 +164,9 @@ const DashCategories = () => {
             id={editCategoriesId}
           />
         )}
+        <div className="mt-10">
+          <h1 className="text-lg">Categories</h1>
+        </div>
         <div className="flex justify-end mb-4">
           <button
             className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
@@ -164,18 +186,22 @@ const DashCategories = () => {
           </thead>
           <tbody>
             {currentItem.map((item) => (
-              <tr key={item.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item.name}</td>
+              <tr key={item?.id} className="text-sm">
+                <td className="px-4 h-12 w-1/4">{item?.name}</td>
                 <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item.createdAt), "dd MMMM yyyy")}
+                  {format(new Date(item?.createdAt), "dd MMMM yyyy")}
                 </td>
                 <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item.updatedAt), "dd MMMM yyyy")}
+                  {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
                 </td>
                 <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
                   <button
                     onClick={() =>
-                      handleDeleteCategories(item.id, categories, setCategories)
+                      handleDeleteCategories(
+                        item?.id,
+                        categories,
+                        setCategories
+                      )
                     }
                     title="Delete"
                   >
@@ -184,14 +210,19 @@ const DashCategories = () => {
                   <button
                     onClick={() => {
                       setShowUpdateCategories(true);
-                      setEditCategoriesId(item.id);
+                      setEditCategoriesId(item?.id);
                       setCategoriesData(item);
                     }}
                     title="Update"
                   >
                     <AiOutlineEdit />
                   </button>
-                  <button title="Detail">
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/categories/detail/${item?.id}`)
+                    }
+                    title="Detail"
+                  >
                     <BiDetail />
                   </button>
                 </td>
@@ -202,7 +233,7 @@ const DashCategories = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
-          totalItems={categories.length}
+          totalItems={categories?.length}
           itemsPerPage={dataPerPage}
         />
         <MessageModal

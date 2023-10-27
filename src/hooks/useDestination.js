@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { destinationData } from "../utils/apis/data";
+import { useNavigate } from "react-router";
 
 export const useDestination = () => {
   const [destination, setDestination] = useState([]);
+  const [errDestination, setErrDestination] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const getDestinationData = () => {
     destinationData()
       .then((res) => {
         setDestination(res.data.data);
+        setIsLoading(false); //matikan isLoading ketika datanya sudah dapat
       })
       .catch((err) => {
+        setErrDestination(err.message);
+        setIsLoading(false);
         console.log(err);
       });
   };
@@ -17,5 +24,5 @@ export const useDestination = () => {
     getDestinationData();
   }, []);
 
-  return { destination, setDestination };
+  return { destination, setDestination, navigate, errDestination, isLoading };
 };

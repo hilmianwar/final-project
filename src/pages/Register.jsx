@@ -2,6 +2,7 @@ import React from "react";
 import login from "../assets/image/login.jpg";
 import { Link } from "react-router-dom";
 import useRegister from "../hooks/useRegister";
+import MessageModal from "../components/MessageModal";
 
 const Register = () => {
   const {
@@ -15,53 +16,23 @@ const Register = () => {
     setPasswordRepeat,
     profilPicture,
     setProfilPicture,
-    err,
-    setErr,
+    phoneNumber,
+    setPhoneNumber,
+    errRegister,
+    setErrRegister,
+    showModalRegister,
+    successRegister,
     handleSubmit,
   } = useRegister();
-  // const [email, setEmail] = useState("");
-  // const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [passwordRepeat, setPasswordRepeat] = useState("");
-  // const [profilPicture, setProfilPicture] = useState("");
-  // const [err, setErr] = useState("");
-
-  // const navigate = useNavigate();
-
-  // const handleSubmit = () => {
-  //   const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
-
-  //   const payload = {
-  //     email: email,
-  //     name: name,
-  //     password: password,
-  //     passwordRepeat: passwordRepeat,
-  //     role: "admin",
-  //     profilPictureUrl: profilPicture,
-  //   };
-
-  //   const headers = {
-  //     apiKey: apiKey,
-  //     "Content-Type": "application/json",
-  //   };
-  //   axios
-  //     .post(
-  //       "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/register",
-  //       payload,
-  //       { headers: headers }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       navigate("/login");
-  //     })
-  //     .catch((err) => {
-  //       setErr(err.response.data.message);
-  //       console.log(err);
-  //     });
-  // };
 
   return (
     <>
+      {/* memunculkan pesan eror/succes */}
+      <MessageModal
+        show={showModalRegister}
+        err={errRegister}
+        succes={successRegister}
+      />
       <div className="bg-black h-screen w-full flex">
         <div className="bg-black relatif w-1/2 h-screen hidden md:block">
           <div className="absolute text-white mt-24 ml-14">
@@ -77,12 +48,6 @@ const Register = () => {
             <div className="text-3xl">
               <h3>Register</h3>
             </div>
-            {!!err.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{err}</p>
-                <button onClick={() => setErr("")}>X</button>
-              </div>
-            )}
             <div className="flex flex-col">
               <input
                 className="rounded-sm mb-2 py-3 bg-transparent border-b border-white outline-none placeholder:text-gray-400"
@@ -118,6 +83,13 @@ const Register = () => {
                 placeholder="Profil Picture Url"
                 value={profilPicture}
                 onChange={(e) => setProfilPicture(e.target.value)}
+              />
+              <input
+                className="rounded-sm mb-2 py-3 bg-transparent border-b border-white outline-none placeholder:text-gray-400"
+                type="text"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <button
