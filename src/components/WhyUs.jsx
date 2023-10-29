@@ -7,16 +7,16 @@ const WhyUs = () => {
 
   return (
     <div className="text-white text-sm relative font-monts flex flex-col justify-center items-center my-10 pt-10 mx-16 mt-20 lg:-mt-20 lg:mx-32">
-      <div className="text-center mb-8">
+      <div className="text-center mb-12">
         <h2 className="text-md">What Makes Us Different</h2>
         {/* <h2 className="text-md">WHAT MAKES US DIFFERENT</h2> */}
         <h1 className="text-5xl">Why Voyager</h1>
       </div>
       <div className="lg:flex">
         <div className="flex justify-center items-center mb-8 lg:w-1/3 lg:order-2 lg:-mt-56">
-          {categories.slice(2, 3).map((item) => (
+          {categories.slice(6, 7).map((item) => (
             <div
-              className="h-80 w-64 rounded-md brightness-75"
+              className="h-80 w-64 rounded-md brightness-50"
               style={{
                 backgroundImage: `url(${item.imageUrl})`,
                 backgroundSize: "cover",

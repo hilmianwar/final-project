@@ -31,6 +31,7 @@ const useUpdatePromo = () => {
       .then((res) => {
         setSuccessUpdate("Update Promo succes");
         setShowMassageModal(true);
+        setShowUpdatePromo(false);
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");

@@ -15,6 +15,7 @@ export const useAddCategories = () => {
       .then((res) => {
         setSuccessMessage("Categories added successfully");
         setShowMassageModal(true);
+        setShowAddCategories(false);
         console.log(res);
         setTimeout(() => {
           setShowMassageModal(false);

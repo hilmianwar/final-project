@@ -6,6 +6,8 @@ export const useCategories = () => {
   const [categories, setCategories] = useState([]);
   const [errCategories, setErrCategories] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
   const navigate = useNavigate();
 
   const getCategoriesData = () => {
@@ -25,5 +27,13 @@ export const useCategories = () => {
     getCategoriesData();
   }, []);
 
-  return { categories, setCategories, navigate, errCategories, isLoading };
+  return {
+    categories,
+    setCategories,
+    navigate,
+    errCategories,
+    isLoading,
+    search,
+    setSearch,
+  };
 };

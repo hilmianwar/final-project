@@ -43,6 +43,7 @@ const useUpdateDestination = () => {
       .then((res) => {
         setSuccessUpdate("Update Destination success");
         setShowModal(true);
+        setShowUpdateDestination(false);
         setTimeout(() => {
           setShowModal(false);
           setSuccessUpdate("");

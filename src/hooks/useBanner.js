@@ -6,6 +6,7 @@ export const useBanner = () => {
   const [current, setCurrent] = useState(0);
   const [errBanner, setErrBanner] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   const getBannerData = () => {
     bannerData()
@@ -45,5 +46,7 @@ export const useBanner = () => {
     prevSlide,
     errBanner,
     isLoading,
+    search,
+    setSearch,
   };
 };

@@ -14,6 +14,7 @@ export const useAddBanner = () => {
       .then((res) => {
         setSuccessMessage("Banner added successfully");
         setShowMassageModal(true);
+        setShowAddBanner(false);
         console.log(res);
         setTimeout(() => {
           setShowMassageModal(false);

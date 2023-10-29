@@ -5,6 +5,7 @@ export const useAllUser = () => {
   const [allUser, setAllUser] = useState([]);
   const [errUser, setErrUser] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   const getAllUser = () => {
     allUserData()
@@ -23,5 +24,5 @@ export const useAllUser = () => {
     getAllUser();
   }, []);
 
-  return { allUser, isLoading, errUser };
+  return { allUser, isLoading, errUser, search, setSearch };
 };

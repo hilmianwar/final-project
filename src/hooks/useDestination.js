@@ -6,6 +6,7 @@ export const useDestination = () => {
   const [destination, setDestination] = useState([]);
   const [errDestination, setErrDestination] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const getDestinationData = () => {
     destinationData()
@@ -24,5 +25,13 @@ export const useDestination = () => {
     getDestinationData();
   }, []);
 
-  return { destination, setDestination, navigate, errDestination, isLoading };
+  return {
+    destination,
+    setDestination,
+    navigate,
+    errDestination,
+    isLoading,
+    search,
+    setSearch,
+  };
 };

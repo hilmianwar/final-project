@@ -27,6 +27,7 @@ export const useAddPromo = () => {
       .then((res) => {
         setSuccessMessage("Promo added successfully");
         setShowMassageModal(true);
+        setShowAddPromo(false);
         console.log(res);
         setTimeout(() => {
           setShowMassageModal(false);

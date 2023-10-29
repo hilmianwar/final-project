@@ -1,4 +1,5 @@
 import React from "react";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 const Pagination = ({
   currentPage,
@@ -21,20 +22,26 @@ const Pagination = ({
   };
 
   return (
-    <div className="flex justify-between mx-3 text-sm">
-      <button
-        onClick={handlePreviousClick}
-        className="p-2 bg-emerald-500 rounded-md"
-      >
-        Prev
-      </button>
-      <div className="page-number">{currentPage}</div>
-      <button
-        onClick={handleNextClick}
-        className="p-2 bg-emerald-500 rounded-md"
-      >
-        Next
-      </button>
+    <div className="flex justify-end mx-3 text-sm mt-6 gap-4 text-white">
+      <div>
+        <button
+          onClick={handlePreviousClick}
+          className="h-6 w-6 bg-emerald-500 rounded-md flex justify-center items-center"
+        >
+          <GrFormPrevious />
+        </button>
+      </div>
+      <div className="page-number">
+        {currentPage} of {totalPages}
+      </div>
+      <div>
+        <button
+          onClick={handleNextClick}
+          className="h-6 w-6 bg-emerald-500 rounded-md flex justify-center items-center"
+        >
+          <GrFormNext />
+        </button>
+      </div>
     </div>
   );
 };

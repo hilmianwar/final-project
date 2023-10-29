@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useProfil } from "../hooks/useProfil";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -17,6 +17,7 @@ const Profil = () => {
   if (errProfil) {
     return <div className="text-white">{errProfil}</div>; //menampilkan pesan error ketika errProfil adalah true
   }
+
   return (
     <div>
       <Header />

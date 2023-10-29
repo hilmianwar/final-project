@@ -6,6 +6,7 @@ const usePromo = () => {
   const [promo, setPromo] = useState([]);
   const [errPromo, setErrPromo] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
 
@@ -45,7 +46,16 @@ const usePromo = () => {
     getPromoData();
   }, []);
 
-  return { promo, setPromo, responsive, navigate, errPromo, isLoading };
+  return {
+    promo,
+    setPromo,
+    responsive,
+    navigate,
+    errPromo,
+    isLoading,
+    search,
+    setSearch,
+  };
 };
 
 export default usePromo;

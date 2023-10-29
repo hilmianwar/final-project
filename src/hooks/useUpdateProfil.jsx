@@ -17,6 +17,7 @@ const useUpdateProfil = () => {
       .then((res) => {
         setSuccessUpdate("Update Profil success");
         setShowMassageModal(true);
+        setShowUpdateProfil(false);
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");

@@ -15,8 +15,14 @@ import { useNavigate } from "react-router";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashCategories = () => {
-  const { categories, setCategories, errCategories, isLoading } =
-    useCategories();
+  const {
+    categories,
+    setCategories,
+    errCategories,
+    isLoading,
+    search,
+    setSearch,
+  } = useCategories();
   const { showAddCategories, setShowAddCategories } = useAddCategories();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
@@ -81,59 +87,79 @@ const DashCategories = () => {
           <h1 className="text-lg">Categories</h1>
         </div>
         <div className="px-4 mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
-          >
-            Add Categoris
-          </button>
-        </div>
-        {currentItem.map((item) => (
-          <div key={item?.id} className="p-4 text-sm">
-            <p>
-              <span className="font-semibold">Name:</span> {item?.name}
-            </p>
-            <p>
-              <span className="font-semibold">Created At:</span>{" "}
-              {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-            </p>
-            <p>
-              <span className="font-semibold">Updated At:</span>{" "}
-              {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-            </p>
-            <p className="flex">
-              <span className="font-semibold">Action:</span>
-              <span className="flex justify-center items-center px-4 gap-3 text-lg">
-                <button
-                  onClick={() =>
-                    handleDeleteCategories(item?.id, categories, setCategories)
-                  }
-                  title="Delete"
-                >
-                  <RiDeleteBin5Line />
-                </button>
-                <button
-                  onClick={() => {
-                    setShowUpdateCategories(true);
-                    setEditCategoriesId(item?.id);
-                    setCategoriesData(item);
-                  }}
-                  title="Update"
-                >
-                  <AiOutlineEdit />
-                </button>
-                <button
-                  onClick={() =>
-                    navigate(`/dashboard/categories/detail/${item?.id}`)
-                  }
-                  title="Detail"
-                >
-                  <BiDetail />
-                </button>
-              </span>
-            </p>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddCategories(true)}
+            >
+              Add Categoris
+            </button>
           </div>
-        ))}
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md mt-4"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        {currentItem
+          ?.filter((item) => {
+            return search.toLowerCase() === ""
+              ? item
+              : item?.name.toLowerCase().includes(search);
+          })
+          .map((item) => (
+            <div key={item?.id} className="p-4 text-sm">
+              <p>
+                <span className="font-semibold">Name:</span> {item?.name}
+              </p>
+              <p>
+                <span className="font-semibold">Created At:</span>{" "}
+                {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+              </p>
+              <p>
+                <span className="font-semibold">Updated At:</span>{" "}
+                {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Action:</span>
+                <span className="flex justify-center items-center px-4 gap-3 text-lg">
+                  <button
+                    onClick={() =>
+                      handleDeleteCategories(
+                        item?.id,
+                        categories,
+                        setCategories
+                      )
+                    }
+                    title="Delete"
+                  >
+                    <RiDeleteBin5Line />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowUpdateCategories(true);
+                      setEditCategoriesId(item?.id);
+                      setCategoriesData(item);
+                    }}
+                    title="Update"
+                  >
+                    <AiOutlineEdit />
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/categories/detail/${item?.id}`)
+                    }
+                    title="Detail"
+                  >
+                    <BiDetail />
+                  </button>
+                </span>
+              </p>
+            </div>
+          ))}
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
@@ -167,13 +193,23 @@ const DashCategories = () => {
         <div className="mt-10">
           <h1 className="text-lg">Categories</h1>
         </div>
-        <div className="flex justify-end mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddCategories(true)}
-          >
-            Add Categoris
-          </button>
+        <div className="flex justify-between mb-4 mt-4">
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddCategories(true)}
+            >
+              Add Categoris
+            </button>
+          </div>
         </div>
         <table className="w-full">
           <thead>
@@ -185,49 +221,55 @@ const DashCategories = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItem.map((item) => (
-              <tr key={item?.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item?.name}</td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-                </td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-                </td>
-                <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
-                  <button
-                    onClick={() =>
-                      handleDeleteCategories(
-                        item?.id,
-                        categories,
-                        setCategories
-                      )
-                    }
-                    title="Delete"
-                  >
-                    <RiDeleteBin5Line />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowUpdateCategories(true);
-                      setEditCategoriesId(item?.id);
-                      setCategoriesData(item);
-                    }}
-                    title="Update"
-                  >
-                    <AiOutlineEdit />
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate(`/dashboard/categories/detail/${item?.id}`)
-                    }
-                    title="Detail"
-                  >
-                    <BiDetail />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {currentItem
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item?.name.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <tr key={item?.id} className="text-sm">
+                  <td className="px-4 h-12 w-1/4">{item?.name}</td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
+                    <button
+                      onClick={() =>
+                        handleDeleteCategories(
+                          item?.id,
+                          categories,
+                          setCategories
+                        )
+                      }
+                      title="Delete"
+                    >
+                      <RiDeleteBin5Line />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUpdateCategories(true);
+                        setEditCategoriesId(item?.id);
+                        setCategoriesData(item);
+                      }}
+                      title="Update"
+                    >
+                      <AiOutlineEdit />
+                    </button>
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/categories/detail/${item?.id}`)
+                      }
+                      title="Detail"
+                    >
+                      <BiDetail />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <Pagination

@@ -16,6 +16,7 @@ const useUpdateCategories = () => {
       .then((res) => {
         setSuccessUpdate("Update Categories success");
         setShowMassageModal(true);
+        setShowUpdateCategories(false);
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");

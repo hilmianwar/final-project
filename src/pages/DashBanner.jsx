@@ -15,7 +15,8 @@ import { useNavigate } from "react-router";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashBanner = () => {
-  const { banner, setBanner, errBanner, isLoading } = useBanner();
+  const { banner, setBanner, errBanner, isLoading, search, setSearch } =
+    useBanner();
   const { showAddBanner, setShowAddBanner } = useAddBanner();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
@@ -81,60 +82,77 @@ const DashBanner = () => {
         <div className="my-10 px-4">
           <h1 className="text-lg">Banner</h1>
         </div>
+
         <div className="px-4 mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddBanner(true)}
-          >
-            Add Banner
-          </button>
-        </div>
-        {currentItem.map((item) => (
-          <div key={item?.id} className="p-4 text-sm">
-            <p>
-              <span className="font-semibold">Name:</span> {item?.name}
-            </p>
-            <p>
-              <span className="font-semibold">Created At:</span>{" "}
-              {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-            </p>
-            <p>
-              <span className="font-semibold">Updated At:</span>{" "}
-              {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-            </p>
-            <p className="flex">
-              <span className="font-semibold">Action:</span>
-              <span className="flex justify-center items-center px-4 gap-3 text-lg">
-                <button
-                  onClick={() =>
-                    handleDeleteBanner(item?.id, banner, setBanner)
-                  }
-                  title="Delete"
-                >
-                  <RiDeleteBin5Line />
-                </button>
-                <button
-                  onClick={() => {
-                    setShowUpdateBanner(true);
-                    setEditBannerId(item?.id);
-                    setBannerData(item);
-                  }}
-                  title="Update"
-                >
-                  <AiOutlineEdit />
-                </button>
-                <button
-                  onClick={() =>
-                    navigate(`/dashboard/banner/detail/${item?.id}`)
-                  }
-                  title="Detail"
-                >
-                  <BiDetail />
-                </button>
-              </span>
-            </p>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddBanner(true)}
+            >
+              Add Banner
+            </button>
           </div>
-        ))}
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md mt-4"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        {currentItem
+          ?.filter((item) => {
+            return search.toLowerCase() === ""
+              ? item
+              : item?.name.toLowerCase().includes(search);
+          })
+          .map((item) => (
+            <div key={item?.id} className="p-4 text-sm">
+              <p>
+                <span className="font-semibold">Name:</span> {item?.name}
+              </p>
+              <p>
+                <span className="font-semibold">Created At:</span>{" "}
+                {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+              </p>
+              <p>
+                <span className="font-semibold">Updated At:</span>{" "}
+                {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Action:</span>
+                <span className="flex justify-center items-center px-4 gap-3 text-lg">
+                  <button
+                    onClick={() =>
+                      handleDeleteBanner(item?.id, banner, setBanner)
+                    }
+                    title="Delete"
+                  >
+                    <RiDeleteBin5Line />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowUpdateBanner(true);
+                      setEditBannerId(item?.id);
+                      setBannerData(item);
+                    }}
+                    title="Update"
+                  >
+                    <AiOutlineEdit />
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/banner/detail/${item?.id}`)
+                    }
+                    title="Detail"
+                  >
+                    <BiDetail />
+                  </button>
+                </span>
+              </p>
+            </div>
+          ))}
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
@@ -169,13 +187,24 @@ const DashBanner = () => {
         <div className="mt-10">
           <h1 className="text-lg">Banner</h1>
         </div>
-        <div className="flex justify-end mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddBanner(true)}
-          >
-            Add Banner
-          </button>
+
+        <div className="flex justify-between mb-4 mt-4 items-center">
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddBanner(true)}
+            >
+              Add Banner
+            </button>
+          </div>
         </div>
         <table className="w-full">
           <thead>
@@ -187,53 +216,61 @@ const DashBanner = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItem?.map((item) => (
-              <tr key={item.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item?.name}</td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-                </td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-                </td>
-                <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
-                  <button
-                    onClick={() =>
-                      handleDeleteBanner(item?.id, banner, setBanner)
-                    }
-                    title="Delete"
-                  >
-                    <RiDeleteBin5Line />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowUpdateBanner(true);
-                      setEditBannerId(item?.id);
-                      setBannerData(item);
-                    }}
-                    title="Update"
-                  >
-                    <AiOutlineEdit />
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate(`/dashboard/banner/detail/${item?.id}`)
-                    }
-                    title="Detail"
-                  >
-                    <BiDetail />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {currentItem
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item?.name.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <tr key={item.id} className="text-sm">
+                  <td className="px-4 h-12 w-1/4">{item?.name}</td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
+                    <button
+                      onClick={() =>
+                        handleDeleteBanner(item?.id, banner, setBanner)
+                      }
+                      title="Delete"
+                    >
+                      <RiDeleteBin5Line />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUpdateBanner(true);
+                        setEditBannerId(item?.id);
+                        setBannerData(item);
+                      }}
+                      title="Update"
+                    >
+                      <AiOutlineEdit />
+                    </button>
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/banner/detail/${item?.id}`)
+                      }
+                      title="Detail"
+                    >
+                      <BiDetail />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={handlePageChange}
-          totalItems={banner?.length}
-          itemsPerPage={dataPerPage}
-        />
+        <div>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={handlePageChange}
+            totalItems={banner?.length}
+            itemsPerPage={dataPerPage}
+          />
+        </div>
         {/* memunculkan pesan error ataupun succes delete*/}
         <MessageModal
           show={showMassageModal}

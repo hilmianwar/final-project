@@ -15,8 +15,14 @@ import MessageModal from "../components/MessageModal";
 import { useNavigate } from "react-router";
 
 const DashDestination = () => {
-  const { destination, setDestination, errDestination, isLoading } =
-    useDestination();
+  const {
+    destination,
+    setDestination,
+    errDestination,
+    isLoading,
+    search,
+    setSearch,
+  } = useDestination();
   const { showAddDestination, setShowAddDestination } = useAddDestination();
   const { isSmallView, handleResize } = useTableResponsive();
   const {
@@ -82,63 +88,79 @@ const DashDestination = () => {
           <h1 className="text-lg">Destination</h1>
         </div>
         <div className="px-4 mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddDestination(true)}
-          >
-            Add Destination
-          </button>
-        </div>
-        {currentItem.map((item) => (
-          <div key={item?.id} className="p-4 text-sm">
-            <p>
-              <span className="font-semibold">Name:</span> {item?.title}
-            </p>
-            <p>
-              <span className="font-semibold">Created At:</span>{" "}
-              {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-            </p>
-            <p>
-              <span className="font-semibold">Updated At:</span>{" "}
-              {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-            </p>
-            <p className="flex">
-              <span className="font-semibold">Action:</span>
-              <span className="flex justify-center items-center px-4 gap-3 text-lg">
-                <button
-                  onClick={() =>
-                    handleDeleteDestination(
-                      item?.id,
-                      destination,
-                      setDestination
-                    )
-                  }
-                  title="Delete"
-                >
-                  <RiDeleteBin5Line />
-                </button>
-                <button
-                  onClick={() => {
-                    setShowUpdateDestination(true);
-                    setEditDestinationId(item?.id);
-                    setDestinationData(item);
-                  }}
-                  title="Update"
-                >
-                  <AiOutlineEdit />
-                </button>
-                <button
-                  onClick={() =>
-                    navigate(`/dashboard/destination/detail/${item?.id}`)
-                  }
-                  title="Detail"
-                >
-                  <BiDetail />
-                </button>
-              </span>
-            </p>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddDestination(true)}
+            >
+              Add Destination
+            </button>
           </div>
-        ))}
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md mt-4"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        {currentItem
+          ?.filter((item) => {
+            return search.toLowerCase() === ""
+              ? item
+              : item?.title.toLowerCase().includes(search);
+          })
+          .map((item) => (
+            <div key={item?.id} className="p-4 text-sm">
+              <p>
+                <span className="font-semibold">Name:</span> {item?.title}
+              </p>
+              <p>
+                <span className="font-semibold">Created At:</span>{" "}
+                {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+              </p>
+              <p>
+                <span className="font-semibold">Updated At:</span>{" "}
+                {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Action:</span>
+                <span className="flex justify-center items-center px-4 gap-3 text-lg">
+                  <button
+                    onClick={() =>
+                      handleDeleteDestination(
+                        item?.id,
+                        destination,
+                        setDestination
+                      )
+                    }
+                    title="Delete"
+                  >
+                    <RiDeleteBin5Line />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowUpdateDestination(true);
+                      setEditDestinationId(item?.id);
+                      setDestinationData(item);
+                    }}
+                    title="Update"
+                  >
+                    <AiOutlineEdit />
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/destination/detail/${item?.id}`)
+                    }
+                    title="Detail"
+                  >
+                    <BiDetail />
+                  </button>
+                </span>
+              </p>
+            </div>
+          ))}
         <Pagination
           currentPage={currentPage}
           setCurrentPage={handlePageChange}
@@ -174,13 +196,23 @@ const DashDestination = () => {
         <div className="mt-10">
           <h1 className="text-lg">Destination</h1>
         </div>
-        <div className="flex justify-end mb-4">
-          <button
-            className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
-            onClick={() => setShowAddDestination(true)}
-          >
-            Add Destination
-          </button>
+        <div className="flex justify-between mb-4 mt-4">
+          <div>
+            <input
+              type="text"
+              placeholder="search"
+              className="bg-neutral-900 p-1 rounded-md"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div>
+            <button
+              className="bg-emerald-500 rounded-md p-1 px-2 hover:bg-emerald-600"
+              onClick={() => setShowAddDestination(true)}
+            >
+              Add Destination
+            </button>
+          </div>
         </div>
         <table className="w-full">
           <thead>
@@ -192,49 +224,55 @@ const DashDestination = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItem.map((item) => (
-              <tr key={item?.id} className="text-sm">
-                <td className="px-4 h-12 w-1/4">{item?.title}</td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.createdAt), "dd MMMM yyyy")}
-                </td>
-                <td className="px-4 h-12 w-1/3">
-                  {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
-                </td>
-                <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
-                  <button
-                    onClick={() =>
-                      handleDeleteDestination(
-                        item?.id,
-                        destination,
-                        setDestination
-                      )
-                    }
-                    title="Delete"
-                  >
-                    <RiDeleteBin5Line />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowUpdateDestination(true);
-                      setEditDestinationId(item?.id);
-                      setDestinationData(item);
-                    }}
-                    title="Update"
-                  >
-                    <AiOutlineEdit />
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate(`/dashboard/destination/detail/${item?.id}`)
-                    }
-                    title="Detail"
-                  >
-                    <BiDetail />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {currentItem
+              ?.filter((item) => {
+                return search.toLowerCase() === ""
+                  ? item
+                  : item?.title.toLowerCase().includes(search);
+              })
+              .map((item) => (
+                <tr key={item?.id} className="text-sm">
+                  <td className="px-4 h-12 w-1/4">{item?.title}</td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.createdAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="px-4 h-12 w-1/3">
+                    {format(new Date(item?.updatedAt), "dd MMMM yyyy")}
+                  </td>
+                  <td className="flex px-4 h-12 w-1/5 gap-3 text-lg">
+                    <button
+                      onClick={() =>
+                        handleDeleteDestination(
+                          item?.id,
+                          destination,
+                          setDestination
+                        )
+                      }
+                      title="Delete"
+                    >
+                      <RiDeleteBin5Line />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUpdateDestination(true);
+                        setEditDestinationId(item?.id);
+                        setDestinationData(item);
+                      }}
+                      title="Update"
+                    >
+                      <AiOutlineEdit />
+                    </button>
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/destination/detail/${item?.id}`)
+                      }
+                      title="Detail"
+                    >
+                      <BiDetail />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <Pagination

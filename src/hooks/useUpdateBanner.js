@@ -16,6 +16,7 @@ const useUpdateBanner = () => {
       .then((res) => {
         setSuccessUpdate("Update Banner succes");
         setShowMassageModal(true);
+        setShowUpdateBanner(false);
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");

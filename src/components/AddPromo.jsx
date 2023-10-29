@@ -18,6 +18,7 @@ const AddPromo = ({ show, onHide }) => {
     setSuccessMessage,
     showMessageModal,
   } = useAddPromo();
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${

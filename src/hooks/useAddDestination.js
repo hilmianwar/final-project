@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addDestinationData, addPromoData } from "../utils/apis/data";
+import { addDestinationData } from "../utils/apis/data";
 
 export const useAddDestination = () => {
   const [categoryId, setCategoryId] = useState("");
@@ -39,6 +39,7 @@ export const useAddDestination = () => {
       .then((res) => {
         setSuccessMessage("Destination added successfully");
         setShowMassageModal(true);
+        setShowAddDestination(false);
         console.log(res);
         setTimeout(() => {
           setShowMassageModal(false);
