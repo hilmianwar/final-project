@@ -1,8 +1,10 @@
 import React from "react";
 import { useAddBanner } from "../hooks/useAddBanner";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const AddBanner = ({ show, onHide }) => {
+  const { imageUrl, handleUploadImage } = useUploadImage();
   const {
     setName,
     setImageUrl,
@@ -13,7 +15,8 @@ const AddBanner = ({ show, onHide }) => {
     setSuccessMessage,
     showMessageModal,
     setShowMassageModal,
-  } = useAddBanner();
+  } = useAddBanner(imageUrl?.[0]);
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${
@@ -49,19 +52,19 @@ const AddBanner = ({ show, onHide }) => {
             </div>
             <div className="mb-9">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
           </form>
           <div className="mt-4">
             <button
-              onClick={handleAddBanner}
+              onClick={() => handleAddBanner(onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

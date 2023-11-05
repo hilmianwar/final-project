@@ -37,7 +37,7 @@ export const registerData = (
   name,
   password,
   passwordRepeat,
-  profilPicture,
+  imageUrl,
   phoneNumber
 ) => {
   const payload = {
@@ -46,7 +46,7 @@ export const registerData = (
     password: password,
     passwordRepeat: passwordRepeat,
     role: "admin",
-    profilePictureUrl: profilPicture,
+    profilePictureUrl: imageUrl,
     phoneNumber: phoneNumber,
   };
 
@@ -156,7 +156,7 @@ export const addDestinationData = (
   categoryId,
   name,
   description,
-  imageUrls,
+  imageUrl,
   price,
   priceDiscount,
   rating,
@@ -171,7 +171,7 @@ export const addDestinationData = (
     categoryId: categoryId,
     title: name,
     description: description,
-    imageUrls: imageUrls,
+    imageUrls: imageUrl,
     price: parseFloat(price),
     price_discount: parseFloat(priceDiscount),
     rating: parseFloat(rating),
@@ -201,7 +201,7 @@ export const UpdateDestinationData = (
   categoryId,
   name,
   description,
-  imageUrls,
+  imageUrl,
   price,
   priceDiscount,
   rating,
@@ -216,7 +216,7 @@ export const UpdateDestinationData = (
     categoryId: categoryId,
     title: name,
     description: description,
-    imageUrls: imageUrls,
+    imageUrls: imageUrl,
     price: parseFloat(price),
     price_discount: parseFloat(priceDiscount),
     rating: parseFloat(rating),
@@ -313,16 +313,11 @@ export const profilData = () => {
   );
 };
 
-export const updateProfilData = (
-  name,
-  email,
-  profilePictureUrl,
-  phoneNumber
-) => {
+export const updateProfilData = (name, email, imageUrl, phoneNumber) => {
   const payload = {
     name: name,
     email: email,
-    profilePictureUrl: profilePictureUrl,
+    profilePictureUrl: imageUrl,
     phoneNumber: phoneNumber,
   };
   return axios.post(

@@ -21,7 +21,7 @@ export const useProfil = () => {
 
   useEffect(() => {
     getProfilData();
-  }, []);
+  }, [profil]);
 
   return { profil, isLoading, errProfil };
 };

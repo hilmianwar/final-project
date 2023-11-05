@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { addCategoriesData, categoriesData } from "../utils/apis/data";
-import { useCategories } from "./useCategories";
 
-export const useAddCategories = () => {
+export const useAddCategories = (imageUrl) => {
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [showAddCategories, setShowAddCategories] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [err, setErr] = useState("");
   const [showMessageModal, setShowMassageModal] = useState(false);
 
-  const handleAddCategories = () => {
+  const handleAddCategories = (onHide) => {
     addCategoriesData(name, imageUrl)
       .then((res) => {
         setSuccessMessage("Categories added successfully");
@@ -20,6 +18,7 @@ export const useAddCategories = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessMessage("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
@@ -37,7 +36,6 @@ export const useAddCategories = () => {
 
   return {
     setName,
-    setImageUrl,
     showAddCategories,
     setShowAddCategories,
     handleAddCategories,

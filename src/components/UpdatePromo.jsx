@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import React from "react";
 import useUpdatePromo from "../hooks/useUpdatePromo";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const UpdatePromo = ({ show, onHide, promo, id }) => {
+  const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
     setName,
     description,
     setDescription,
-    imageUrl,
-    setImageUrl,
     condition,
     setCondition,
     promCode,
@@ -25,7 +25,7 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
     successUpdate,
     setSuccessUpdate,
     showMessageModal,
-  } = useUpdatePromo();
+  } = useUpdatePromo(imageUrl?.[0]);
 
   useEffect(() => {
     if (promo) {
@@ -87,14 +87,13 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
             </div>
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
             <div className="mb-2">
@@ -148,7 +147,7 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
           </form>
           <div className="modal-footer mt-4">
             <button
-              onClick={() => handleUpdatePromo(id)}
+              onClick={() => handleUpdatePromo(id, onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

@@ -23,7 +23,7 @@ export const useDestination = () => {
 
   useEffect(() => {
     getDestinationData();
-  }, []);
+  }, [destination]);
 
   return {
     destination,

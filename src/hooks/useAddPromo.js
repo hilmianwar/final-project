@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { addPromoData } from "../utils/apis/data";
 
-export const useAddPromo = () => {
+export const useAddPromo = (imageUrl) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [condition, setCondition] = useState("");
   const [promCode, setPromCode] = useState("");
   const [promDiscPrice, setPromDiscPrice] = useState(0);
@@ -14,7 +13,7 @@ export const useAddPromo = () => {
   const [err, setErr] = useState("");
   const [showMessageModal, setShowMassageModal] = useState(false);
 
-  const handleAddPromo = () => {
+  const handleAddPromo = (onHide) => {
     addPromoData(
       name,
       description,
@@ -32,6 +31,7 @@ export const useAddPromo = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessMessage("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
@@ -41,7 +41,6 @@ export const useAddPromo = () => {
         console.log(err);
         setTimeout(() => {
           setShowMassageModal(false);
-          setSuccessMessage("");
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
       });
@@ -50,7 +49,6 @@ export const useAddPromo = () => {
   return {
     setName,
     setDescription,
-    setImageUrl,
     setCondition,
     setPromCode,
     setPromDiscPrice,

@@ -1,13 +1,17 @@
 import React from "react";
 import { useAddDestination } from "../hooks/useAddDestination";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
+import { useCategories } from "../hooks/useCategories";
 
 const AddDestination = ({ show, onHide }) => {
+  const { imageUrl, handleUploadImage } = useUploadImage();
+  const { categories } = useCategories();
+  console.log(categories);
   const {
     setCategoryId,
     setName,
     setDescription,
-    setImageUrls,
     setPrice,
     setPriceDiscount,
     setRating,
@@ -24,7 +28,7 @@ const AddDestination = ({ show, onHide }) => {
     setSuccessMessage,
     showMessageModal,
     setShowMassageModal,
-  } = useAddDestination();
+  } = useAddDestination(imageUrl);
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${
@@ -51,12 +55,17 @@ const AddDestination = ({ show, onHide }) => {
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Category Id
               </label>
-              <input
-                type="text"
+              <select
                 onChange={(e) => setCategoryId(e.target.value)}
                 className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter Category Id"
-              />
+              >
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -83,13 +92,13 @@ const AddDestination = ({ show, onHide }) => {
             </div>
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                onChange={(e) => setImageUrls(e.target.value.split(","))} // Memisahkan nilai input berdasarkan koma (,) dan mengubahnya menjadi array
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
             <div className="mb-2">
@@ -194,7 +203,7 @@ const AddDestination = ({ show, onHide }) => {
           </form>
           <div className="mt-4">
             <button
-              onClick={handleAddDestination}
+              onClick={() => handleAddDestination(onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

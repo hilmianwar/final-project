@@ -2,28 +2,28 @@ import { useEffect } from "react";
 import React from "react";
 import MessageModal from "./MessageModal";
 import useUpdateProfil from "../hooks/useUpdateProfil";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const UpdateProfil = ({ show, onHide, profil }) => {
+  const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
     setName,
     email,
     setEmail,
-    profilePictureUrl,
-    setProfilePictureUrl,
     phoneNumber,
     setPhoneNumber,
     handleUpdateProfil,
     successUpdate,
     errUpdate,
     showMessageModal,
-  } = useUpdateProfil();
+  } = useUpdateProfil(imageUrl?.[0]);
 
   useEffect(() => {
     if (profil) {
       setName(profil.name);
       setEmail(profil.email);
-      setProfilePictureUrl(profil.profilePictureUrl);
+      setImageUrl(profil.profilePictureUrl);
       setPhoneNumber(profil.phoneNumber);
     }
   }, [profil]);
@@ -76,14 +76,13 @@ const UpdateProfil = ({ show, onHide, profil }) => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Profil Picture Url
+                Profil Picture
               </label>
               <input
-                type="text"
-                value={profilePictureUrl}
-                onChange={(e) => setProfilePictureUrl(e.target.value)}
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
             <div className="mb-4">
@@ -101,7 +100,7 @@ const UpdateProfil = ({ show, onHide, profil }) => {
           </form>
           <div className="modal-footer mt-4">
             <button
-              onClick={handleUpdateProfil}
+              onClick={() => handleUpdateProfil(onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

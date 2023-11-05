@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import React from "react";
 import useUpdateCategories from "../hooks/useUpdateCategories";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const UpdateCategories = ({ show, onHide, categories, id }) => {
+  const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
-    imageUrl,
     setName,
-    setImageUrl,
     handleUpdateCategories,
     showMessageModal,
     setShowMassageModal,
@@ -16,7 +16,7 @@ const UpdateCategories = ({ show, onHide, categories, id }) => {
     setErrUpdate,
     successUpdate,
     setSuccessUpdate,
-  } = useUpdateCategories();
+  } = useUpdateCategories(imageUrl?.[0]);
 
   useEffect(() => {
     if (categories) {
@@ -61,20 +61,19 @@ const UpdateCategories = ({ show, onHide, categories, id }) => {
             </div>
             <div className="mb-9">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
           </form>
           <div className="modal-footer mt-4">
             <button
-              onClick={() => handleUpdateCategories(id)}
+              onClick={() => handleUpdateCategories(id, onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

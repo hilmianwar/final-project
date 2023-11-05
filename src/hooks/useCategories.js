@@ -25,7 +25,7 @@ export const useCategories = () => {
 
   useEffect(() => {
     getCategoriesData();
-  }, []);
+  }, [categories]);
 
   return {
     categories,

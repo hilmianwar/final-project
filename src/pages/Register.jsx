@@ -3,8 +3,10 @@ import login from "../assets/image/login.jpg";
 import { Link } from "react-router-dom";
 import useRegister from "../hooks/useRegister";
 import MessageModal from "../components/MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const Register = () => {
+  const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     email,
     setEmail,
@@ -14,8 +16,6 @@ const Register = () => {
     setPassword,
     passwordRepeat,
     setPasswordRepeat,
-    profilPicture,
-    setProfilPicture,
     phoneNumber,
     setPhoneNumber,
     errRegister,
@@ -23,7 +23,7 @@ const Register = () => {
     showModalRegister,
     successRegister,
     handleSubmit,
-  } = useRegister();
+  } = useRegister(imageUrl?.[0]);
 
   return (
     <>
@@ -79,10 +79,9 @@ const Register = () => {
               />
               <input
                 className="rounded-sm mb-2 py-3 bg-transparent border-b border-white outline-none placeholder:text-gray-400"
-                type="text"
-                placeholder="Profil Picture Url"
-                value={profilPicture}
-                onChange={(e) => setProfilPicture(e.target.value)}
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
               />
               <input
                 className="rounded-sm mb-2 py-3 bg-transparent border-b border-white outline-none placeholder:text-gray-400"

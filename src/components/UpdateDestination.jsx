@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import React from "react";
 import useUpdateDestination from "../hooks/useUpdateDestination";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const UpdateDestination = ({ show, onHide, destination, id }) => {
+  const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     categoryId,
     setCategoryId,
@@ -11,8 +13,6 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
     setName,
     description,
     setDescription,
-    imageUrls,
-    setImageUrls,
     price,
     setPrice,
     priceDiscount,
@@ -38,14 +38,14 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
     setSuccessUpdate,
     showModal,
     setShowModal,
-  } = useUpdateDestination();
+  } = useUpdateDestination(imageUrl);
 
   useEffect(() => {
     if (destination) {
       setCategoryId(destination.categoryId);
       setName(destination.title);
       setDescription(destination.description);
-      setImageUrls(destination.imageUrls);
+      setImageUrl(destination.imageUrls);
       setPrice(destination.price);
       setPriceDiscount(destination.price_discount);
       setPriceDiscount(destination.price_discount);
@@ -76,23 +76,6 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
             <h3 className="font-semibold">Update Destination</h3>
           </div>
           <form>
-            {!!errUpdate.length && (
-              <div className=" bg-red-500 p-2 rounded-md flex justify-between">
-                <p>{errUpdate}</p>
-                <button onClick={() => setErrUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )}
-            {/* {!!successUpdate.length && (
-              <div className=" bg-green-500 p-2 rounded-md flex justify-between">
-                <p>{successUpdate}</p>
-                <button onClick={() => setSuccessUpdate("")} className=" pr-1">
-                  X
-                </button>
-              </div>
-            )} */}
-            {/* memunculkan pesan error ataupun succes delete*/}
             <MessageModal
               show={showModal}
               onHide={() => setShowModal(false)}
@@ -138,14 +121,13 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
             </div>
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                value={imageUrls}
-                onChange={(e) => setImageUrls(e.target.value.split(","))} // Memisahkan nilai input berdasarkan koma (,) dan mengubahnya menjadi array
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
             <div className="mb-2">
@@ -259,7 +241,7 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
           </form>
           <div className="modal-footer mt-4">
             <button
-              onClick={() => handleUpdateDestination(id)}
+              onClick={() => handleUpdateDestination(id, onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

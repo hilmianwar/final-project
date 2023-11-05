@@ -2,12 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { registerData } from "../utils/apis/data";
 
-const useRegister = () => {
+const useRegister = (imageUrl) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
-  const [profilPicture, setProfilPicture] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [successRegister, setSuccessRegister] = useState("");
   const [errRegister, setErrRegister] = useState("");
@@ -35,14 +34,7 @@ const useRegister = () => {
       }, 2000);
       return; // tidak melanjutkan permintaan ke server jika pass & confirm pass tdk cocok
     }
-    registerData(
-      email,
-      name,
-      password,
-      passwordRepeat,
-      profilPicture,
-      phoneNumber
-    )
+    registerData(email, name, password, passwordRepeat, imageUrl, phoneNumber)
       .then((res) => {
         setSuccessRegister("Registration was successful!");
         setShowModalRegister(true);
@@ -80,8 +72,6 @@ const useRegister = () => {
     setPassword,
     passwordRepeat,
     setPasswordRepeat,
-    profilPicture,
-    setProfilPicture,
     phoneNumber,
     setPhoneNumber,
     successRegister,

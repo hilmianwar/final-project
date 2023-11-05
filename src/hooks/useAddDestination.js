@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { addDestinationData } from "../utils/apis/data";
 
-export const useAddDestination = () => {
+export const useAddDestination = (imageUrl) => {
   const [categoryId, setCategoryId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrls, setImageUrls] = useState([]);
   const [price, setPrice] = useState(0);
   const [priceDiscount, setPriceDiscount] = useState(0);
   const [rating, setRating] = useState(0);
@@ -20,12 +19,12 @@ export const useAddDestination = () => {
   const [err, setErr] = useState("");
   const [showMessageModal, setShowMassageModal] = useState(false);
 
-  const handleAddDestination = () => {
+  const handleAddDestination = (onHide) => {
     addDestinationData(
       categoryId,
       name,
       description,
-      imageUrls,
+      imageUrl,
       price,
       priceDiscount,
       rating,
@@ -44,6 +43,7 @@ export const useAddDestination = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessMessage("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(res);
       })
@@ -53,7 +53,6 @@ export const useAddDestination = () => {
         console.log(err);
         setTimeout(() => {
           setShowMassageModal(false);
-          setSuccessMessage("");
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
       });
@@ -63,7 +62,6 @@ export const useAddDestination = () => {
     setCategoryId,
     setName,
     setDescription,
-    setImageUrls,
     setPrice,
     setPriceDiscount,
     setRating,

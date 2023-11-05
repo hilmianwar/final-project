@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { addBannerData } from "../utils/apis/data";
 
-export const useAddBanner = () => {
+export const useAddBanner = (imageUrl) => {
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [showAddBanner, setShowAddBanner] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [err, setErr] = useState("");
   const [showMessageModal, setShowMassageModal] = useState(false);
 
-  const handleAddBanner = () => {
+  const handleAddBanner = (onHide) => {
     addBannerData(name, imageUrl)
       .then((res) => {
         setSuccessMessage("Banner added successfully");
@@ -19,6 +18,7 @@ export const useAddBanner = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessMessage("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
@@ -27,14 +27,12 @@ export const useAddBanner = () => {
         console.log(err);
         setTimeout(() => {
           setShowMassageModal(false);
-          setSuccessMessage("");
         }, 2000); //modal disembunyikan setelah 2 detik
       });
   };
 
   return {
     setName,
-    setImageUrl,
     showAddBanner,
     setShowAddBanner,
     handleAddBanner,

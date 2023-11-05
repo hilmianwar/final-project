@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
-import { updateCategoriesData, updatePromoData } from "../utils/apis/data";
-import { useCategories } from "./useCategories";
+import { useState } from "react";
+import { updatePromoData } from "../utils/apis/data";
 
-const useUpdatePromo = () => {
+const useUpdatePromo = (imageUrl) => {
   const [promoData, setPromoData] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [condition, setCondition] = useState("");
   const [promCode, setPromCode] = useState("");
   const [promDiscPrice, setPromDiscPrice] = useState(0);
@@ -17,7 +15,7 @@ const useUpdatePromo = () => {
   const [showMessageModal, setShowMassageModal] = useState(false);
   const [editPromoId, setEditPromoId] = useState(null);
 
-  const handleUpdatePromo = (id) => {
+  const handleUpdatePromo = (id, onHide) => {
     updatePromoData(
       id,
       name,
@@ -35,10 +33,15 @@ const useUpdatePromo = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
         setErrUpdate("error Update Promo");
+        setShowMassageModal(true);
+        setTimeout(() => {
+          setShowMassageModal(false);
+        }, 2000); //modal disembunyikan setelah 2 detik
       });
   };
   return {
@@ -46,8 +49,6 @@ const useUpdatePromo = () => {
     setName,
     description,
     setDescription,
-    imageUrl,
-    setImageUrl,
     condition,
     setCondition,
     promCode,

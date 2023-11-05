@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { updateBannerData, updateProfilData } from "../utils/apis/data";
 
-const useUpdateProfil = () => {
+const useUpdateProfil = (imageUrl) => {
   const [profilData, setProfilData] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  // const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [successUpdate, setSuccessUpdate] = useState("");
   const [errUpdate, setErrUpdate] = useState("");
   const [showUpdateProfil, setShowUpdateProfil] = useState(false);
   const [showMessageModal, setShowMassageModal] = useState(false);
 
-  const handleUpdateProfil = () => {
-    updateProfilData(name, email, profilePictureUrl, phoneNumber)
+  const handleUpdateProfil = (onHide) => {
+    updateProfilData(name, email, imageUrl, phoneNumber)
       .then((res) => {
         setSuccessUpdate("Update Profil success");
         setShowMassageModal(true);
@@ -21,6 +21,7 @@ const useUpdateProfil = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
@@ -32,8 +33,6 @@ const useUpdateProfil = () => {
     setName,
     email,
     setEmail,
-    profilePictureUrl,
-    setProfilePictureUrl,
     phoneNumber,
     setPhoneNumber,
     handleUpdateProfil,

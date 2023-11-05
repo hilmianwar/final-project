@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { updateBannerData } from "../utils/apis/data";
 
-const useUpdateBanner = () => {
+const useUpdateBanner = (imageUrl) => {
   const [bannerData, setBannerData] = useState([]);
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [successUpdate, setSuccessUpdate] = useState("");
   const [errUpdate, setErrUpdate] = useState("");
   const [showUpdateBanner, setShowUpdateBanner] = useState(false);
   const [showMessageModal, setShowMassageModal] = useState(false);
   const [editBannerId, setEditBannerId] = useState(null);
 
-  const handleUpdateBanner = (id) => {
+  const handleUpdateBanner = (id, onHide) => {
     updateBannerData(id, name, imageUrl)
       .then((res) => {
         setSuccessUpdate("Update Banner succes");
@@ -20,17 +19,20 @@ const useUpdateBanner = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
         setErrUpdate("error Update Banner");
+        setShowMassageModal(true);
+        setTimeout(() => {
+          setShowMassageModal(false);
+        }, 2000); //modal disembunyikan setelah 2 detik
       });
   };
   return {
     name,
-    imageUrl,
     setName,
-    setImageUrl,
     handleUpdateBanner,
     successUpdate,
     setSuccessUpdate,

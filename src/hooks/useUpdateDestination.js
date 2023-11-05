@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { UpdateDestinationData } from "../utils/apis/data";
 
-const useUpdateDestination = () => {
+const useUpdateDestination = (imageUrl) => {
   const [destinationData, setDestinationData] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrls, setImageUrls] = useState([]);
   const [price, setPrice] = useState(0);
   const [priceDiscount, setPriceDiscount] = useState(0);
   const [rating, setRating] = useState(0);
@@ -23,13 +22,13 @@ const useUpdateDestination = () => {
   const [showModal, setShowModal] = useState(false);
   const [editDestinationId, setEditDestinationId] = useState(null);
 
-  const handleUpdateDestination = (id) => {
+  const handleUpdateDestination = (id, onHide) => {
     UpdateDestinationData(
       id,
       categoryId,
       name,
       description,
-      imageUrls,
+      imageUrl,
       price,
       priceDiscount,
       rating,
@@ -47,10 +46,15 @@ const useUpdateDestination = () => {
         setTimeout(() => {
           setShowModal(false);
           setSuccessUpdate("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
         setErrUpdate("error Update Destination");
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 2000); //modal disembunyikan setelah 2 detik
       });
   };
   return {
@@ -60,8 +64,6 @@ const useUpdateDestination = () => {
     setName,
     description,
     setDescription,
-    imageUrls,
-    setImageUrls,
     price,
     setPrice,
     priceDiscount,

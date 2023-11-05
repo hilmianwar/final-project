@@ -1,8 +1,10 @@
 import React from "react";
 import { useAddPromo } from "../hooks/useAddPromo";
 import MessageModal from "./MessageModal";
+import { useUploadImage } from "../hooks/useUploadImage";
 
 const AddPromo = ({ show, onHide }) => {
+  const { imageUrl, handleUploadImage } = useUploadImage();
   const {
     setName,
     setDescription,
@@ -17,7 +19,7 @@ const AddPromo = ({ show, onHide }) => {
     successMessage,
     setSuccessMessage,
     showMessageModal,
-  } = useAddPromo();
+  } = useAddPromo(imageUrl?.[0]);
 
   return (
     <div
@@ -65,13 +67,13 @@ const AddPromo = ({ show, onHide }) => {
             </div>
             <div className="mb-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Image URL
+                Image
               </label>
               <input
-                type="text"
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full border p-2 rounded-lg text-black"
-                placeholder="Enter image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleUploadImage(e.target.files[0])}
+                className="w-full border p-2 rounded-lg text-white"
               />
             </div>
             <div className="mb-2">
@@ -121,7 +123,7 @@ const AddPromo = ({ show, onHide }) => {
           </form>
           <div className="mt-4">
             <button
-              onClick={handleAddPromo}
+              onClick={() => handleAddPromo(onHide)}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg"
             >
               Save

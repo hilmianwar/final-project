@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { updateCategoriesData } from "../utils/apis/data";
 
-const useUpdateCategories = () => {
+const useUpdateCategories = (imageUrl) => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [successUpdate, setSuccessUpdate] = useState("");
   const [errUpdate, setErrUpdate] = useState("");
   const [showUpdateCategories, setShowUpdateCategories] = useState(false);
   const [showMessageModal, setShowMassageModal] = useState(false);
   const [editCategoriesId, setEditCategoriesId] = useState(null);
 
-  const handleUpdateCategories = (id) => {
+  const handleUpdateCategories = (id, onHide) => {
     updateCategoriesData(id, name, imageUrl)
       .then((res) => {
         setSuccessUpdate("Update Categories success");
@@ -20,6 +19,7 @@ const useUpdateCategories = () => {
         setTimeout(() => {
           setShowMassageModal(false);
           setSuccessUpdate("");
+          onHide();
         }, 2000); //modal disembunyikan setelah 2 detik
       })
       .catch((err) => {
@@ -28,9 +28,7 @@ const useUpdateCategories = () => {
   };
   return {
     name,
-    imageUrl,
     setName,
-    setImageUrl,
     handleUpdateCategories,
     successUpdate,
     errUpdate,

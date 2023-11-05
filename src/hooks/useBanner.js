@@ -36,7 +36,7 @@ export const useBanner = () => {
 
   useEffect(() => {
     getBannerData();
-  }, []);
+  }, [banner]);
 
   return {
     banner,
