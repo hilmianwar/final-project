@@ -3,7 +3,7 @@ import { useAddPromo } from "../hooks/useAddPromo";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const AddPromo = ({ show, onHide }) => {
+const AddPromo = ({ show, onHide, triggerPromo, setTriggerPromo }) => {
   const { imageUrl, handleUploadImage } = useUploadImage();
   const {
     setName,
@@ -19,7 +19,7 @@ const AddPromo = ({ show, onHide }) => {
     successMessage,
     setSuccessMessage,
     showMessageModal,
-  } = useAddPromo(imageUrl?.[0]);
+  } = useAddPromo(imageUrl?.[0], triggerPromo, setTriggerPromo);
 
   return (
     <div

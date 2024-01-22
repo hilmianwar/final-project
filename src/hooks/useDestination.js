@@ -23,9 +23,10 @@ export const useDestination = () => {
 
   useEffect(() => {
     getDestinationData();
-  }, [destination]);
+  }, []);
 
   return {
+    get: getDestinationData,
     destination,
     setDestination,
     navigate,

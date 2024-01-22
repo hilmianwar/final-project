@@ -4,7 +4,13 @@ import MessageModal from "./MessageModal";
 import useUpdateProfil from "../hooks/useUpdateProfil";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const UpdateProfil = ({ show, onHide, profil }) => {
+const UpdateProfil = ({
+  show,
+  onHide,
+  profil,
+  triggerProfil,
+  setTriggerProfil,
+}) => {
   const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
@@ -17,7 +23,7 @@ const UpdateProfil = ({ show, onHide, profil }) => {
     successUpdate,
     errUpdate,
     showMessageModal,
-  } = useUpdateProfil(imageUrl?.[0]);
+  } = useUpdateProfil(imageUrl?.[0], triggerProfil, setTriggerProfil);
 
   useEffect(() => {
     if (profil) {

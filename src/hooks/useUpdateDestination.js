@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { UpdateDestinationData } from "../utils/apis/data";
 
-const useUpdateDestination = (imageUrl) => {
+const useUpdateDestination = (
+  imageUrl,
+  triggerDestination,
+  setTriggerDestination
+) => {
   const [destinationData, setDestinationData] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [name, setName] = useState("");
@@ -55,6 +59,11 @@ const useUpdateDestination = (imageUrl) => {
         setTimeout(() => {
           setShowModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
+      })
+      .finally(() => {
+        if (setTriggerDestination) {
+          setTriggerDestination((prev) => (prev ? false : true));
+        }
       });
   };
   return {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { addBannerData } from "../utils/apis/data";
+import { useBanner } from "./useBanner";
 
-export const useAddBanner = (imageUrl) => {
+export const useAddBanner = (imageUrl, triggerBanner, setTriggerBanner) => {
   const [name, setName] = useState("");
   const [showAddBanner, setShowAddBanner] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -28,6 +29,11 @@ export const useAddBanner = (imageUrl) => {
         setTimeout(() => {
           setShowMassageModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
+      })
+      .finally(() => {
+        if (setTriggerBanner) {
+          setTriggerBanner((prev) => (prev ? false : true));
+        }
       });
   };
 

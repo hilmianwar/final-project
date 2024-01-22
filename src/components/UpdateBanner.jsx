@@ -4,7 +4,14 @@ import useUpdateBanner from "../hooks/useUpdateBanner";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const UpdateBanner = ({ show, onHide, banner, id }) => {
+const UpdateBanner = ({
+  show,
+  onHide,
+  banner,
+  id,
+  triggerBanner,
+  setTriggerBanne,
+}) => {
   const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
@@ -13,7 +20,7 @@ const UpdateBanner = ({ show, onHide, banner, id }) => {
     successUpdate,
     errUpdate,
     showMessageModal,
-  } = useUpdateBanner(imageUrl?.[0]);
+  } = useUpdateBanner(imageUrl?.[0], triggerBanner, setTriggerBanne);
 
   useEffect(() => {
     if (banner) {

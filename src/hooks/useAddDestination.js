@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { addDestinationData } from "../utils/apis/data";
 
-export const useAddDestination = (imageUrl) => {
+export const useAddDestination = (
+  imageUrl,
+  triggerDestination,
+  setTriggerDestination
+) => {
   const [categoryId, setCategoryId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -55,6 +59,11 @@ export const useAddDestination = (imageUrl) => {
           setShowMassageModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
+      })
+      .finally(() => {
+        if (setTriggerDestination) {
+          setTriggerDestination((prev) => (prev ? false : true));
+        }
       });
   };
 

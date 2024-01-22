@@ -4,7 +4,12 @@ import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 import { useCategories } from "../hooks/useCategories";
 
-const AddDestination = ({ show, onHide }) => {
+const AddDestination = ({
+  show,
+  onHide,
+  triggerDestination,
+  setTriggerDestination,
+}) => {
   const { imageUrl, handleUploadImage } = useUploadImage();
   const { categories } = useCategories();
   console.log(categories);
@@ -28,7 +33,7 @@ const AddDestination = ({ show, onHide }) => {
     setSuccessMessage,
     showMessageModal,
     setShowMassageModal,
-  } = useAddDestination(imageUrl);
+  } = useAddDestination(imageUrl, triggerDestination, setTriggerDestination);
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${

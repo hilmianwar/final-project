@@ -3,7 +3,7 @@ import { useAddBanner } from "../hooks/useAddBanner";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const AddBanner = ({ show, onHide }) => {
+const AddBanner = ({ show, onHide, triggerBanner, setTriggerAddBaner }) => {
   const { imageUrl, handleUploadImage } = useUploadImage();
   const {
     setName,
@@ -15,7 +15,7 @@ const AddBanner = ({ show, onHide }) => {
     setSuccessMessage,
     showMessageModal,
     setShowMassageModal,
-  } = useAddBanner(imageUrl?.[0]);
+  } = useAddBanner(imageUrl?.[0], triggerBanner, setTriggerAddBaner);
 
   return (
     <div

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { updateBannerData, updateProfilData } from "../utils/apis/data";
 
-const useUpdateProfil = (imageUrl) => {
+const useUpdateProfil = (imageUrl, triggerProfil, setTriggerProfil) => {
   const [profilData, setProfilData] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +26,11 @@ const useUpdateProfil = (imageUrl) => {
       })
       .catch((err) => {
         setErrUpdate("error Update Profil");
+      })
+      .finally(() => {
+        if (setTriggerProfil) {
+          setTriggerProfil((prev) => (prev ? false : true));
+        }
       });
   };
   return {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { addPromoData } from "../utils/apis/data";
 
-export const useAddPromo = (imageUrl) => {
+export const useAddPromo = (imageUrl, triggerPromo, setTriggerPromo) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [condition, setCondition] = useState("");
@@ -43,6 +43,11 @@ export const useAddPromo = (imageUrl) => {
           setShowMassageModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
         console.log(err);
+      })
+      .finally(() => {
+        if (setTriggerPromo) {
+          setTriggerPromo((prev) => (prev ? false : true));
+        }
       });
   };
 

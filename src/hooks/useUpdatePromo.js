@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { updatePromoData } from "../utils/apis/data";
 
-const useUpdatePromo = (imageUrl) => {
+const useUpdatePromo = (imageUrl, triggerPromo, setTriggerPromo) => {
   const [promoData, setPromoData] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -42,6 +42,11 @@ const useUpdatePromo = (imageUrl) => {
         setTimeout(() => {
           setShowMassageModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
+      })
+      .finally(() => {
+        if (setTriggerPromo) {
+          setTriggerPromo((prev) => (prev ? false : true));
+        }
       });
   };
   return {

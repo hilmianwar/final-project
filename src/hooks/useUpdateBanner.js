@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { updateBannerData } from "../utils/apis/data";
 
-const useUpdateBanner = (imageUrl) => {
+const useUpdateBanner = (imageUrl, triggerBanner, setTriggerBanner) => {
   const [bannerData, setBannerData] = useState([]);
   const [name, setName] = useState("");
   const [successUpdate, setSuccessUpdate] = useState("");
@@ -28,6 +28,11 @@ const useUpdateBanner = (imageUrl) => {
         setTimeout(() => {
           setShowMassageModal(false);
         }, 2000); //modal disembunyikan setelah 2 detik
+      })
+      .finally(() => {
+        if (setTriggerBanner) {
+          setTriggerBanner((prev) => (prev ? false : true));
+        }
       });
   };
   return {

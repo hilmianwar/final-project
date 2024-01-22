@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useProfil } from "../hooks/useProfil";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,9 +7,17 @@ import UpdateProfil from "../components/UpdateProfil";
 import { AiOutlineEdit } from "react-icons/ai";
 
 const Profil = () => {
-  const { profil, errProfil, isLoading } = useProfil();
+  const [triggerProfil, setTriggerProfil] = useState(false);
+  const { profil, errProfil, isLoading, get } = useProfil();
   const { showUpdateProfil, setShowUpdateProfil, profilData, setProfilData } =
     useUpdateProfil();
+
+  useEffect(() => {
+    if (!isLoading) {
+      get();
+    }
+  }, [triggerProfil]);
+
   if (isLoading) {
     return <div className="text-white">Loading...</div>; // Menampilkan pesan "Loading..." ketika isLoading adalah true
   }
@@ -27,6 +35,8 @@ const Profil = () => {
           show={showUpdateProfil}
           onHide={() => setShowUpdateProfil(false)}
           profil={profilData}
+          triggerProfil={triggerProfil}
+          setTriggerProfil={setTriggerProfil}
         />
       )}
       <div className="flex flex-col justify-center items-center mx-2 lg:mx-20 font-mont text-white mb-6 pt-32 py-10">

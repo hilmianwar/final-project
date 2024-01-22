@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
 import { useCategories } from "../hooks/useCategories";
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashCategories = () => {
+  const [triggerCategories, setTriggerCategories] = useState(false);
   const {
     categories,
     setCategories,
@@ -22,6 +23,7 @@ const DashCategories = () => {
     isLoading,
     search,
     setSearch,
+    get,
   } = useCategories();
   const { showAddCategories, setShowAddCategories } = useAddCategories();
   const { isSmallView, handleResize } = useTableResponsive();
@@ -56,6 +58,12 @@ const DashCategories = () => {
     currentPage * dataPerPage
   );
 
+  useEffect(() => {
+    if (!isLoading) {
+      get();
+    }
+  }, [triggerCategories]);
+
   window.addEventListener("resize", handleResize);
 
   if (isLoading) {
@@ -73,6 +81,8 @@ const DashCategories = () => {
           <AddCategories
             show={showAddCategories}
             onHide={() => setShowAddCategories(false)}
+            setTriggerCategories={setTriggerCategories}
+            triggerCategories={triggerCategories}
           />
         )}
         {showUpdateCategories && (
@@ -81,6 +91,8 @@ const DashCategories = () => {
             onHide={() => setShowUpdateCategories(false)}
             categories={categoriesData}
             id={editCategoriesId}
+            setTriggerUpdate={setTriggerCategories}
+            triggerUpdate={triggerCategories}
           />
         )}
         <div className="my-10 px-4">
@@ -180,6 +192,8 @@ const DashCategories = () => {
           <AddCategories
             show={showAddCategories}
             onHide={() => setShowAddCategories(false)}
+            setTriggerCategories={setTriggerCategories}
+            triggerCategories={triggerCategories}
           />
         )}
         {showUpdateCategories && (
@@ -188,6 +202,8 @@ const DashCategories = () => {
             onHide={() => setShowUpdateCategories(false)}
             categories={categoriesData}
             id={editCategoriesId}
+            setTriggerUpdate={setTriggerCategories}
+            triggerUpdate={triggerCategories}
           />
         )}
         <div className="mt-10">

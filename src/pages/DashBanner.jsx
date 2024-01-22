@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -15,7 +15,8 @@ import { useNavigate } from "react-router";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
 
 const DashBanner = () => {
-  const { banner, setBanner, errBanner, isLoading, search, setSearch } =
+  const [triggerBanner, setTriggerBanner] = useState(false);
+  const { banner, setBanner, errBanner, isLoading, search, setSearch, get } =
     useBanner();
   const { showAddBanner, setShowAddBanner } = useAddBanner();
   const { isSmallView, handleResize } = useTableResponsive();
@@ -40,6 +41,11 @@ const DashBanner = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5; // Jumlah pengguna per halaman
 
+  useEffect(() => {
+    if (!isLoading) {
+      get();
+    }
+  }, [triggerBanner]);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -68,6 +74,8 @@ const DashBanner = () => {
           <AddBanner
             show={showAddBanner}
             onHide={() => setShowAddBanner(false)}
+            setTriggerAddBaner={setTriggerBanner}
+            triggerBanner={triggerBanner}
           />
         )}
         {/* memunculkan form Update banner */}
@@ -77,6 +85,8 @@ const DashBanner = () => {
             onHide={() => setShowUpdateBanner(false)}
             banner={bannerData}
             id={editBannerId}
+            setTriggerBanne={setTriggerBanner}
+            triggerBanner={triggerBanner}
           />
         )}
         <div className="my-10 px-4">
@@ -174,6 +184,8 @@ const DashBanner = () => {
           <AddBanner
             show={showAddBanner}
             onHide={() => setShowAddBanner(false)}
+            setTriggerAddBaner={setTriggerBanner}
+            triggerBanner={triggerBanner}
           />
         )}
         {showUpdateBanner && (
@@ -182,6 +194,8 @@ const DashBanner = () => {
             onHide={() => setShowUpdateBanner(false)}
             banner={bannerData}
             id={editBannerId}
+            setTriggerBanne={setTriggerBanner}
+            triggerBanner={triggerBanner}
           />
         )}
         <div className="mt-10">

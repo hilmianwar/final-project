@@ -4,7 +4,14 @@ import useUpdateCategories from "../hooks/useUpdateCategories";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const UpdateCategories = ({ show, onHide, categories, id }) => {
+const UpdateCategories = ({
+  show,
+  onHide,
+  categories,
+  id,
+  triggerUpdate,
+  setTriggerUpdate,
+}) => {
   const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
@@ -16,7 +23,7 @@ const UpdateCategories = ({ show, onHide, categories, id }) => {
     setErrUpdate,
     successUpdate,
     setSuccessUpdate,
-  } = useUpdateCategories(imageUrl?.[0]);
+  } = useUpdateCategories(imageUrl?.[0], triggerUpdate, setTriggerUpdate);
 
   useEffect(() => {
     if (categories) {

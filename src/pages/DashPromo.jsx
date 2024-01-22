@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
@@ -15,7 +15,8 @@ import MessageModal from "../components/MessageModal";
 import { useNavigate } from "react-router";
 
 const DashPromo = () => {
-  const { promo, setPromo, errPromo, isLoading, search, setSearch } =
+  const [triggerPromo, setTriggerPromo] = useState(false);
+  const { promo, setPromo, errPromo, isLoading, search, setSearch, get } =
     usePromo();
   const { showAddPromo, setShowAddPromo } = useAddPromo();
   const { isSmallView, handleResize } = useTableResponsive();
@@ -54,6 +55,12 @@ const DashPromo = () => {
 
   window.addEventListener("resize", handleResize);
 
+  useEffect(() => {
+    if (!isLoading) {
+      get();
+    }
+  }, [triggerPromo]);
+
   if (isLoading) {
     return <div>Loading...</div>; // Menampilkan pesan "Loading..." ketika isLoading adalah true
   }
@@ -66,7 +73,12 @@ const DashPromo = () => {
     return (
       <div className=" shadow-md rounded my-6 mx-1 font-mont">
         {showAddPromo && (
-          <AddPromo show={showAddPromo} onHide={() => setShowAddPromo(false)} />
+          <AddPromo
+            show={showAddPromo}
+            onHide={() => setShowAddPromo(false)}
+            triggerPromo={triggerPromo}
+            setTriggerPromo={setTriggerPromo}
+          />
         )}
         {showUpdatePromo && (
           <UpdatePromo
@@ -74,6 +86,8 @@ const DashPromo = () => {
             onHide={() => setShowUpdatePromo(false)}
             promo={promoData}
             id={editPromoId}
+            triggerPromo={triggerPromo}
+            setTriggerPromo={setTriggerPromo}
           />
         )}
         <div className="my-10 px-4">
@@ -164,7 +178,12 @@ const DashPromo = () => {
     return (
       <div className="shadow-md rounded my-6 mx-1 lg:mx-10 font-mont">
         {showAddPromo && (
-          <AddPromo show={showAddPromo} onHide={() => setShowAddPromo(false)} />
+          <AddPromo
+            show={showAddPromo}
+            onHide={() => setShowAddPromo(false)}
+            triggerPromo={triggerPromo}
+            setTriggerPromo={setTriggerPromo}
+          />
         )}
         {showUpdatePromo && (
           <UpdatePromo
@@ -172,6 +191,8 @@ const DashPromo = () => {
             onHide={() => setShowUpdatePromo(false)}
             promo={promoData}
             id={editPromoId}
+            triggerPromo={triggerPromo}
+            setTriggerPromo={setTriggerPromo}
           />
         )}
         <div className="mt-10">

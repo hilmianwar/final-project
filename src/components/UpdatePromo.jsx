@@ -4,7 +4,14 @@ import useUpdatePromo from "../hooks/useUpdatePromo";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const UpdatePromo = ({ show, onHide, promo, id }) => {
+const UpdatePromo = ({
+  show,
+  onHide,
+  promo,
+  id,
+  triggerPromo,
+  setTriggerPromo,
+}) => {
   const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     name,
@@ -25,7 +32,7 @@ const UpdatePromo = ({ show, onHide, promo, id }) => {
     successUpdate,
     setSuccessUpdate,
     showMessageModal,
-  } = useUpdatePromo(imageUrl?.[0]);
+  } = useUpdatePromo(imageUrl?.[0], triggerPromo, setTriggerPromo);
 
   useEffect(() => {
     if (promo) {

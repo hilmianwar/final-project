@@ -44,9 +44,10 @@ const usePromo = () => {
 
   useEffect(() => {
     getPromoData();
-  }, [promo]);
+  }, []);
 
   return {
+    get: getPromoData,
     promo,
     setPromo,
     responsive,

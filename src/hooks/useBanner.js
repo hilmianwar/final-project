@@ -36,7 +36,7 @@ export const useBanner = () => {
 
   useEffect(() => {
     getBannerData();
-  }, [banner]);
+  }, []);
 
   return {
     banner,
@@ -48,5 +48,6 @@ export const useBanner = () => {
     isLoading,
     search,
     setSearch,
+    get: getBannerData,
   };
 };

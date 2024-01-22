@@ -4,7 +4,14 @@ import useUpdateDestination from "../hooks/useUpdateDestination";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const UpdateDestination = ({ show, onHide, destination, id }) => {
+const UpdateDestination = ({
+  show,
+  onHide,
+  destination,
+  id,
+  triggerDestination,
+  setTriggerDestination,
+}) => {
   const { imageUrl, setImageUrl, handleUploadImage } = useUploadImage();
   const {
     categoryId,
@@ -38,7 +45,7 @@ const UpdateDestination = ({ show, onHide, destination, id }) => {
     setSuccessUpdate,
     showModal,
     setShowModal,
-  } = useUpdateDestination(imageUrl);
+  } = useUpdateDestination(imageUrl, triggerDestination, setTriggerDestination);
 
   useEffect(() => {
     if (destination) {

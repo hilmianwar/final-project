@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Pagination from "../components/Pagination";
 import { useTableResponsive } from "../hooks/useTabelResponsive";
@@ -15,6 +15,7 @@ import MessageModal from "../components/MessageModal";
 import { useNavigate } from "react-router";
 
 const DashDestination = () => {
+  const [triggerDestination, setTriggerDestination] = useState(false);
   const {
     destination,
     setDestination,
@@ -22,6 +23,7 @@ const DashDestination = () => {
     isLoading,
     search,
     setSearch,
+    get,
   } = useDestination();
   const { showAddDestination, setShowAddDestination } = useAddDestination();
   const { isSmallView, handleResize } = useTableResponsive();
@@ -58,6 +60,11 @@ const DashDestination = () => {
 
   window.addEventListener("resize", handleResize);
 
+  useEffect(() => {
+    if (!isLoading) {
+      get();
+    }
+  }, [triggerDestination]);
   if (isLoading) {
     return <div>Loading...</div>; // Menampilkan pesan "Loading..." ketika isLoading adalah true
   }
@@ -74,6 +81,8 @@ const DashDestination = () => {
           <AddDestination
             show={showAddDestination}
             onHide={() => setShowAddDestination(false)}
+            setTriggerDestination={setTriggerDestination}
+            triggerDestination={triggerDestination}
           />
         )}
         {showUpdateDestination && (
@@ -82,6 +91,8 @@ const DashDestination = () => {
             onHide={() => setShowUpdateDestination(false)}
             destination={destinationData}
             id={editDestinationId}
+            setTriggerDestination={setTriggerDestination}
+            triggerDestination={triggerDestination}
           />
         )}
         <div className="my-10 px-4">
@@ -183,6 +194,8 @@ const DashDestination = () => {
           <AddDestination
             show={showAddDestination}
             onHide={() => setShowAddDestination(false)}
+            setTriggerDestination={setTriggerDestination}
+            triggerDestination={triggerDestination}
           />
         )}
         {showUpdateDestination && (
@@ -191,6 +204,8 @@ const DashDestination = () => {
             onHide={() => setShowUpdateDestination(false)}
             destination={destinationData}
             id={editDestinationId}
+            setTriggerDestination={setTriggerDestination}
+            triggerDestination={triggerDestination}
           />
         )}
         <div className="mt-10">

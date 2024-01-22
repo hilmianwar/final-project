@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { updateCategoriesData } from "../utils/apis/data";
 
-const useUpdateCategories = (imageUrl) => {
+const useUpdateCategories = (imageUrl, triggerUpdate, setTriggerUpdate) => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [name, setName] = useState("");
   const [successUpdate, setSuccessUpdate] = useState("");
@@ -24,6 +24,11 @@ const useUpdateCategories = (imageUrl) => {
       })
       .catch((err) => {
         setErrUpdate("error Update Categories");
+      })
+      .finally(() => {
+        if (setTriggerUpdate) {
+          setTriggerUpdate((prev) => (prev ? false : true));
+        }
       });
   };
   return {

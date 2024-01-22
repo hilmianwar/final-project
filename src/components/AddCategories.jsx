@@ -3,7 +3,12 @@ import { useAddCategories } from "../hooks/useAddCategories";
 import MessageModal from "./MessageModal";
 import { useUploadImage } from "../hooks/useUploadImage";
 
-const AddCategories = ({ show, onHide }) => {
+const AddCategories = ({
+  show,
+  onHide,
+  triggerCategories,
+  setTriggerCategories,
+}) => {
   const { imageUrl, handleUploadImage } = useUploadImage();
   const {
     setName,
@@ -13,7 +18,7 @@ const AddCategories = ({ show, onHide }) => {
     successMessage,
     setSuccessMessage,
     showMessageModal,
-  } = useAddCategories(imageUrl?.[0]);
+  } = useAddCategories(imageUrl?.[0], triggerCategories, setTriggerCategories);
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${
